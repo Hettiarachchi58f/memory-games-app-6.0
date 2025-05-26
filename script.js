@@ -454,19 +454,28 @@ window.onload = () => {
   
   document.getElementById('leaderboardContainer').classList.add('collapsed');
 };
-// තොරතුරු පිටුව විවෘත කිරීම
-document.getElementById('mobileInfoBtn').addEventListener('click', function() {
-  document.getElementById('mobileInfoPage').style.display = 'block';
-});
-
-// තොරතුරු පිටුව වසා තැබීම
-function closeMobileInfo() {
-  document.getElementById('mobileInfoPage').style.display = 'none';
+// About Page Functions
+function showAboutPage() {
+  document.getElementById('aboutPage').style.display = 'flex';
+  console.log('About Page: දැන් පෙන්වනු ලැබේ (පරීක්ෂණ අවස්ථාව)');
 }
 
-// ස්වයංක්‍රීයව වසන වින්‍යාසය
-document.getElementById('mobileInfoPage').addEventListener('click', function(e) {
-  if(e.target === this) {
-    closeMobileInfo();
-  }
-});
+function hideAboutPage() {
+  document.getElementById('aboutPage').style.display = 'none';
+  console.log('About Page: දැන් සඟවනු ලැබේ (පරීක්ෂණ අවස්ථාව)');
+}
+
+function closeAboutPage() {
+  document.getElementById('aboutPage').style.display = 'none';
+  console.log('About Page: පරිශීලකයා විසින් වැසීම');
+}
+
+// Debug Mode Check
+const debugMode = false; // true කරන්න පරීක්ෂණ සඳහා
+
+if(debugMode) {
+  document.querySelector('.debug-controls').style.display = 'flex';
+  console.log('Debug Mode: සක්‍රීයයි. About Page පාලන බොත්තම් පෙන්වනු ලැබේ');
+} else {
+  document.querySelector('.debug-controls').style.display = 'none';
+}
