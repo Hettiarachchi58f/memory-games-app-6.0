@@ -453,4 +453,26 @@ window.onload = () => {
   preloadAudio();
   
   document.getElementById('leaderboardContainer').classList.add('collapsed');
-};
+};// තොරතුරු පිටුව විවෘත කිරීම
+function openInfoPage() {
+  document.getElementById('infoPage').style.display = 'block';
+}
+
+// තොරතුරු පිටුව වසා තැබීම
+function closeInfoPage() {
+  document.getElementById('infoPage').style.display = 'none';
+}
+
+// ESC යතුරෙන් වසන්න
+document.addEventListener('keydown', function(event) {
+  if (event.key === 'Escape') {
+    closeInfoPage();
+  }
+});
+
+// පිටුවේ ඕනෑම තැනක් ක්ලික් කළ විට වසන්න
+window.addEventListener('click', function(event) {
+  if (event.target === document.getElementById('infoPage')) {
+    closeInfoPage();
+  }
+});
