@@ -123,37 +123,28 @@
     <div id="leaderboardContainer" class="leaderboard-container">
       <ol id="leaderboard"></ol>
     </div>
-<!-- තොරතුරු පිටුව -->
-<div id="infoPage" class="modal">
-  <div class="modal-content">
-    <span class="close-btn" onclick="closeInfoPage()">&times;</span>
-    
-    <div class="creator-profile">
-      <img src="images/creator.jpg" alt="Created by" class="creator-image">
-      <h3>Hashan Hettiarachchi</h3>
-      <p>Game developer</p>
+<!-- තොරතුරු බොත්තම (හැම විටම පෙනෙන) -->
+<button id="mobileInfoBtn" class="mobile-info-btn">
+  <img src="icons/info-icon.png" alt="About page" width="30">
+</button>
+
+<!-- තොරතුරු පිටුව (මොඩල්) -->
+<div id="mobileInfoPage" class="mobile-modal">
+  <div class="mobile-modal-content">
+    <div class="mobile-close-area">
+      <button onclick="closeMobileInfo()" class="mobile-close-btn">
+        <img src="icons/close-icon.png" alt="වසන්න" width="25">
+      </button>
     </div>
     
-    <div class="game-info">
-      <p>අනුවාදය: 6.0.0</p>
-      <p>© 2025 මතක තරඟය</p>
+    <div class="mobile-creator-info">
+      <img src="images/creator-mobile.jpg" alt="Game developer" class="mobile-creator-img">
+      <h3>created by Hashan Hettiarachchi</h3>
+      <p>මතක තරඟය - 6.0.1</p>
+      <p>© 2024 මතක තරඟය</p>
     </div>
   </div>
 </div>
-
-<!-- තොරතුරු බොත්තම් -->
-<button onclick="openInfoPage()" class="info-btn">about</button>
-    <div id="instructionsModal" class="modal">
-      <div class="modal-content">
-        <h3>ක්‍රීඩා උපදෙස්</h3>
-        <p>1. කාඩ්පත් දෙකක් එකින් එක පෙරළන්න</p>
-        <p>2. ගැලපෙන කාඩ්පත් ජෝඩු සොයන්න</p>
-        <p>3. අඩුම කාලයෙන් සියලු ජෝඩු සොයන්න</p>
-        <p>4. අඩුම උත්සාහ ගණනකින් ජයග්‍රහණය කරන්න</p>
-        <button onclick="closeInstructions()">හරි</button>
-      </div>
-    </div>
-
     <audio id="matchSound" src="match.mp3" preload="auto"></audio>
     <audio id="mismatchSound" src="mismatch.mp3" preload="auto"></audio>
     <audio id="winSound" src="win.mp3" preload="auto"></audio>
