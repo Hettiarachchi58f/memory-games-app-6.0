@@ -123,24 +123,39 @@
     <div id="leaderboardContainer" class="leaderboard-container">
       <ol id="leaderboard"></ol>
     </div>
-<!-- තොරතුරු පිටුව (මොඩල්) -->
-    <div class="mobileInfopage-header">
-<div id="mobileInfoPage" class="mobile-modal">
-  <div class="mobile-modal-content">
-    <div class="mobile-close-area">
-      <button onclick="closeMobileInfo()" class="mobile-close-btn">
-        <span class="toggle-icon">▼</span> About page වසන්න
-      </button>
+<!-- About Page Container (සැමවිටම වැසුණු තත්වයෙන්) -->
+<div id="aboutPage" class="about-page" style="display:none;">
+  <div class="about-content">
+    <button class="close-btn" onclick="closeAboutPage()">
+      <img src="icons/close-icon.png" alt="වැසීම" width="20">
+    </button>
+    
+    <div class="creator-info">
+      <img src="images/creator.png" alt="d by" class="creator-img">
+      <h2>Hashan Hettiarachchi</h2>
+      <p class="title">d by</p>
     </div>
     
-    <div class="mobile-creator-info">
-      <img src="creator-mobile.png" alt="Game developer" class="mobile-creator-png">
-      <h3>created by Hashan Hettiarachchi</h3>
-      <p>මතක තරඟය - 6.1.1</p>
-      <p><strong>තාක්ෂණය:</strong> HTML5, CSS3, JavaScript</p>
-      <p>© 2025 මතක තරඟය</p>
+    <div class="version-info">
+      <p><span>අනුවාදය:</span> 6.1.0</p>
+      <p><span>නිර්මාණ දිනය:</span> 2025 </p>
+    </div>
+    
+    <div class="tech-used">
+      <h3>භාවිතා කළ තාක්ෂණ</h3>
+      <div class="tech-icons">
+        <img src="icons/html5.png" alt="HTML5">
+        <img src="icons/css3.png" alt="CSS3">
+        <img src="icons/js.png" alt="JavaScript">
+      </div>
     </div>
   </div>
+</div>
+
+<!-- Debug Controls (පරීක්ෂණ සඳහා) -->
+<div class="debug-controls">
+  <button onclick="showAboutPage()">පරීක්ෂණයට පෙන්වන්න</button>
+  <button onclick="hideAboutPage()">පරීක්ෂණයට සඟවන්න</button>
 </div>
     <div id="instructionsModal" class="modal">
     <div class="modal-content">
