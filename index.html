@@ -48,7 +48,6 @@
           <option value="hard">උපරිම (6x4)</option>
         </select>
       </div>
-      
       <div class="control-group">
         <p>තේමාව තෝරන්න:</p>
         <select id="themeSelect">
@@ -61,18 +60,15 @@
           <option value="foods">ආහාර</option>
         </select>
       </div>
-      
       <div class="control-group">
         <p>කාඩ්පත් ප්‍රමාණය:</p>
         <input type="range" id="cardSize" min="50" max="100" value="80">
       </div>
     </div>
-    
     <div class="buttons">
       <button onclick="startGame()">ක්‍රීඩාව අරඹන්න</button>
       <button onclick="showInstructions()">උපදෙස්</button>
     </div>
-
     <div id="gameStatus">
       <div id="info">
         <p>කාලය: <span id="timer">0</span> තත්පර</p>
@@ -82,17 +78,14 @@
         <p>ගැලපීම්: <span id="matches">0</span>/<span id="totalPairs">0</span></p>
       </div>
     </div>
-
     <div class="game-container" id="gameContainer">
       <div class="game-board" id="gameBoard"></div>
     </div>
-
     <div id="winMessage" class="hidden">
       <div class="win-content">
         <div class="trophy-icon">🏆</div>
         <h2 class="win-title">සුභ පැතුම්!</h2>
         <p class="win-subtitle">ඔබ තරගය ජයග්‍රහණය කළා!</p>
-        
         <div class="win-stats-container">
           <div class="win-stat">
             <span class="stat-label">කාලය:</span>
@@ -104,7 +97,6 @@
             <span class="stat-value" id="finalAttempts">0</span>
           </div>
         </div>
-        
         <div class="win-buttons">
           <button class="win-button restart-btn" onclick="restartGame()">
             <span class="button-icon">↻</span>
@@ -114,59 +106,44 @@
       </div>
     </div>
 
+    <!-- ලැයිස්තුව ටොගල් බොත්තම -->
     <div class="leaderboard-header">
-      <h2>ඉහළ ලකුණු</h2>
       <button id="toggleLeaderboard" class="leaderboard-toggle">
-        <span class="toggle-icon">▼</span> ලැයිස්තුව
+        <span class="toggle-icon">▼</span> <span class="toggle-text">ඉහළ ලකුණු</span>
       </button>
     </div>
     <div id="leaderboardContainer" class="leaderboard-container">
       <ol id="leaderboard"></ol>
     </div>
-<!-- About Page Container (සැමවිටම වැසුණු තත්වයෙන්) -->
-<div id="aboutPage" class="about-page" style="display:none;">
-  <div class="about-content">
-    <button class="close-btn" onclick="closeAboutPage()">
-      <img src="icons/close-icon.png" alt="වැසීම" width="20">
+
+    <!-- තොරතුරු පිටුව ටොගල් බොත්තම -->
+    <button id="aboutToggle" class="about-toggle-btn">
+      <span class="toggle-icon">▼</span> <span class="toggle-text">තොරතුරු පිටුව</span>
     </button>
-    
-    <div class="creator-info">
-      <img src="images/creator.png" alt="d by" class="creator-img">
-      <h2>Hashan Hettiarachchi</h2>
-      <p class="title">d by</p>
-    </div>
-    
-    <div class="version-info">
-      <p><span>අනුවාදය:</span> 6.1.0</p>
-      <p><span>නිර්මාණ දිනය:</span> 2025 </p>
-    </div>
-    
-    <div class="tech-used">
-      <h3>භාවිතා කළ තාක්ෂණ</h3>
-      <div class="tech-icons">
-        <img src="icons/html5.png" alt="HTML5">
-        <img src="icons/css3.png" alt="CSS3">
-        <img src="icons/js.png" alt="JavaScript">
+    <div id="aboutContent" class="about-content">
+      <div class="creator-info">
+        <img src="creator-mobile.png" alt="created by" class="creator-png">
+        <h3>created by Hashan Hettiarachchi</h3>
+        <p class="creator-title">Game developer</p>
+      </div>
+      <div class="version-info">
+        <p><span>අනුවාදය:</span> 8.1.2</p>
+        <p><span>නිර්මාණ දිනය:</span> 2025</p>
+        <p><span>තාක්ෂණය:</span> HTML5, CSS3, JavaScript</p>
       </div>
     </div>
-  </div>
-</div>
 
-<!-- Debug Controls (පරීක්ෂණ සඳහා) -->
-<div class="debug-controls">
-  <button onclick="showAboutPage()">පරීක්ෂණයට පෙන්වන්න</button>
-  <button onclick="hideAboutPage()">පරීක්ෂණයට සඟවන්න</button>
-</div>
     <div id="instructionsModal" class="modal">
-    <div class="modal-content">
-      <h3>ක්‍රීඩා උපදෙස්</h3>
-      <p>1. කාඩ්පත් දෙකක් එකින් එක පෙරළන්න</p>
-      <p>2. ගැලපෙන කාඩ්පත් ජෝඩු සොයන්න</p>
-      <p>3. අඩුම කාලයෙන් සියලු ජෝඩු සොයන්න</p>
-      <p>4. අඩුම උත්සාහ ගණනකින් ජයග්‍රහණය කරන්න</p>
-      <button onclick="closeInstructions()">හරි</button>
+      <div class="modal-content">
+        <h3>ක්‍රීඩා උපදෙස්</h3>
+        <p>1. කාඩ්පත් දෙකක් එකින් එක පෙරළන්න</p>
+        <p>2. ගැලපෙන කාඩ්පත් ජෝඩු සොයන්න</p>
+        <p>3. අඩුම කාලයෙන් සියලු ජෝඩු සොයන්න</p>
+        <p>4. අඩුම උත්සාහ ගණනකින් ජයග්‍රහණය කරන්න</p>
+        <button onclick="closeInstructions()">හරි</button>
+      </div>
     </div>
-</div>
+
     <audio id="matchSound" src="match.mp3" preload="auto"></audio>
     <audio id="mismatchSound" src="mismatch.mp3" preload="auto"></audio>
     <audio id="winSound" src="win.mp3" preload="auto"></audio>
