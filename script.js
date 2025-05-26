@@ -453,49 +453,20 @@ window.onload = () => {
   preloadAudio();
   
   document.getElementById('leaderboardContainer').classList.add('collapsed');
-};// තොරතුරු පිටුව විවෘත කිරීම
-function openInfoPage() {
-  document.getElementById('infoPage').style.display = 'block';
-}
-
-// තොරතුරු පිටුව වසා තැබීම
-function closeInfoPage() {
-  document.getElementById('infoPage').style.display = 'none';
-}
-
-// ESC යතුරෙන් වසන්න
-document.addEventListener('keydown', function(event) {
-  if (event.key === 'Escape') {
-    closeInfoPage();
-  }
-});
-
-// පිටුවේ ඕනෑම තැනක් ක්ලික් කළ විට වසන්න
-window.addEventListener('click', function(event) {
-  if (event.target === document.getElementById('infoPage')) {
-    closeInfoPage();
-  }
-});
+};
 // තොරතුරු පිටුව විවෘත කිරීම
-function openInfoPage() {
-  document.getElementById('infoPage').style.display = 'block';
-}
-
-// තොරතුරු පිටුව වසා තැබීම
-function closeInfoPage() {
-  document.getElementById('infoPage').style.display = 'none';
-}
-
-// ESC යතුරෙන් වසන්න
-document.addEventListener('keydown', function(event) {
-  if (event.key === 'Escape') {
-    closeInfoPage();
-  }
+document.getElementById('mobileInfoBtn').addEventListener('click', function() {
+  document.getElementById('mobileInfoPage').style.display = 'block';
 });
 
-// පිටුවේ ඕනෑම තැනක් ක්ලික් කළ විට වසන්න
-window.addEventListener('click', function(event) {
-  if (event.target === document.getElementById('infoPage')) {
-    closeInfoPage();
+// තොරතුරු පිටුව වසා තැබීම
+function closeMobileInfo() {
+  document.getElementById('mobileInfoPage').style.display = 'none';
+}
+
+// ස්වයංක්‍රීයව වසන වින්‍යාසය
+document.getElementById('mobileInfoPage').addEventListener('click', function(e) {
+  if(e.target === this) {
+    closeMobileInfo();
   }
 });
