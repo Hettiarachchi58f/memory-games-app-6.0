@@ -424,103 +424,75 @@ button:hover {
 
   .win-content {
     width: 85%;
-  }/* තොරතුරු පිටුව */
-.modal {
+    /* ජංගම තොරතුරු පිටුව */
+.mobile-modal {
   display: none;
   position: fixed;
-  z-index: 1000;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.7);
-}
-
-.modal-content {
-  background-color: #fefefe;
-  margin: 10% auto;
-  padding: 20px;
-  border-radius: 10px;
-  width: 80%;
-  max-width: 500px;
-  position: relative;
-}
-
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 20px;
-  font-size: 28px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.info-btn {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  padding: 10px 15px;
-  background: #00796b;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  font-size: 20px;
-  cursor: pointer;
-  z-index: 100;
-}
-
-/* අඳුරු ප්‍රකාරය */
-.dark-mode .modal-content {
-  background-color: #1e1e1e;
-  color: white;
-}
-}/* තොරතුරු පිටුව */
-.modal {
-  display: none;
-  position: fixed;
+  background: rgba(0,0,0,0.9);
   z-index: 1000;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.7);
+  overflow-y: auto;
 }
 
-.modal-content {
-  background-color: #fefefe;
-  margin: 10% auto;
-  padding: 20px;
-  border-radius: 10px;
-  width: 80%;
-  max-width: 500px;
+.mobile-modal-content {
+  background: #e0f7fa;
+  margin: 20% auto;
+  width: 90%;
+  border-radius: 15px;
+  padding: 15px;
   position: relative;
 }
 
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 20px;
-  font-size: 28px;
-  font-weight: bold;
-  cursor: pointer;
+.mobile-close-area {
+  text-align: right;
+  margin-bottom: 10px;
 }
 
-.info-btn {
+.mobile-close-btn {
+  background: none;
+  border: none;
+  padding: 5px;
+}
+
+.mobile-creator-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto 15px;
+  border: 3px solid #00796b;
+}
+
+.mobile-info-btn {
   position: fixed;
   bottom: 20px;
-  left: 20px;
-  padding: 10px 15px;
+  right: 20px;
   background: #00796b;
-  color: white;
   border: none;
   border-radius: 50%;
-  font-size: 20px;
-  cursor: pointer;
-  z-index: 100;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.3);
 }
 
-/* අඳුරු ප්‍රකාරය */
-.dark-mode .modal-content {
-  background-color: #1e1e1e;
+/* ජංගම උපාංග සඳහා විශේෂ වින්‍යාස */
+@media (max-width: 600px) {
+  .mobile-modal-content {
+    margin: 30% auto;
+    padding: 20px;
+  }
+  
+  .mobile-creator-info h3 {
+    font-size: 1.2rem;
+  }
+}
+  
   color: white;
 }
