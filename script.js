@@ -67,7 +67,7 @@ function toggleSound() {
 document.getElementById('darkModeToggle').addEventListener('click', toggleDarkMode);
 function toggleDarkMode() {
   darkMode = !darkMode;
-  document.body.classList.toggle('dark-mode', darkMode);
+  document.body.setAttribute('data-theme', darkMode ? 'dark' : '');
   document.getElementById('darkModeToggle').textContent = 
     darkMode ? 'සාමාන්‍ය ප්‍රකාරය' : 'අඳුරු ප්‍රකාරය';
   localStorage.setItem('darkMode', darkMode);
@@ -250,7 +250,7 @@ function renderLeaderboard() {
 function showWinMessage() {
   document.getElementById('finalTime').textContent = time;
   document.getElementById('finalAttempts').textContent = attempts;
-  document.getElementById('winMessage').classList.remove('hidden');
+  document.getElementById('winMessage').classList.add('show');
   
   // Vibrate on win if supported
   if (navigator.vibrate) {
@@ -259,15 +259,15 @@ function showWinMessage() {
 }
 
 function hideWinMessage() {
-  document.getElementById('winMessage').classList.add('hidden');
+  document.getElementById('winMessage').classList.remove('show');
 }
 
 function showInstructions() {
-  document.getElementById('instructionsModal').style.display = 'block';
+  document.getElementById('instructionsModal').classList.add('show');
 }
 
 function closeInstructions() {
-  document.getElementById('instructionsModal').style.display = 'none';
+  document.getElementById('instructionsModal').classList.remove('show');
 }
 
 function startGame() {
@@ -305,7 +305,7 @@ function hideControls() {
 function checkUsername() {
   const savedUsername = localStorage.getItem('username');
   if (!savedUsername) {
-    document.getElementById('usernameModal').style.display = 'block';
+    document.getElementById('usernameModal').classList.add('show');
   }
 }
 
@@ -313,7 +313,7 @@ function saveUsername() {
   const username = document.getElementById('usernameInput').value.trim();
   if (username && username.length <= 20) {
     localStorage.setItem('username', username);
-    document.getElementById('usernameModal').style.display = 'none';
+    document.getElementById('usernameModal').classList.remove('show');
     renderUsernameInHeader();
   } else {
     alert("කරුණාකර වලංගු නාමයක් ඇතුළත් කරන්න (උපරිම අක්ෂර 20)");
@@ -329,6 +329,39 @@ function renderUsernameInHeader() {
     usernameDisplay.textContent = `පරිශීලක: ${username}`;
     header.insertBefore(usernameDisplay, header.firstChild);
   }
+}
+
+// Toggle Functions
+function initToggles() {
+  // Leaderboard toggle
+  document.getElementById('toggleLeaderboard').addEventListener('click', function() {
+    this.classList.toggle('active');
+    const container = document.getElementById('leaderboardContainer');
+    container.classList.toggle('show');
+    
+    if (soundEnabled) {
+      const toggleSound = new Audio('toggle.mp3');
+      toggleSound.volume = 0.3;
+      toggleSound.play().catch(e => console.log("Toggle sound failed:", e));
+    }
+  });
+
+  // About page toggle
+  document.getElementById('aboutToggle').addEventListener('click', function() {
+    this.classList.toggle('active');
+    const content = document.getElementById('aboutContent');
+    content.classList.toggle('show');
+    
+    if (soundEnabled) {
+      const infoSound = new Audio('info.mp3');
+      infoSound.volume = 0.3;
+      infoSound.play().catch(e => console.log("Info sound failed:", e));
+    }
+  });
+
+  // Close both sections by default
+  document.getElementById('leaderboardContainer').classList.remove('show');
+  document.getElementById('aboutContent').classList.remove('show');
 }
 
 // PWA Installation
@@ -380,12 +413,6 @@ window.addEventListener('appinstalled', () => {
   if (installBtn) installBtn.remove();
 });
 
-// Leaderboard Toggle
-document.getElementById('toggleLeaderboard').addEventListener('click', function() {
-  const container = document.getElementById('leaderboardContainer');
-  container.classList.toggle('collapsed');
-});
-
 // Initialize Settings
 function initSettings() {
   // Sound settings
@@ -400,7 +427,7 @@ function initSettings() {
   const savedDarkMode = localStorage.getItem('darkMode') === 'true';
   if (savedDarkMode) {
     darkMode = true;
-    document.body.classList.add('dark-mode');
+    document.body.setAttribute('data-theme', 'dark');
     document.getElementById('darkModeToggle').textContent = 'සාමාන්‍ය ප්‍රකාරය';
   }
 
@@ -423,11 +450,11 @@ function preloadAudio() {
 // Android Back Button Handling
 document.addEventListener('backbutton', handleBackButton, false);
 function handleBackButton() {
-  if (!document.getElementById('winMessage').classList.contains('hidden')) {
+  if (document.getElementById('winMessage').classList.contains('show')) {
     hideWinMessage();
-  } else if (document.getElementById('instructionsModal').style.display === 'block') {
+  } else if (document.getElementById('instructionsModal').classList.contains('show')) {
     closeInstructions();
-  } else if (document.getElementById('usernameModal').style.display === 'block') {
+  } else if (document.getElementById('usernameModal').classList.contains('show')) {
     return;
   } else if (window.navigator.app) {
     navigator.app.exitApp();
@@ -446,36 +473,10 @@ window.onload = () => {
   }, 2000);
   
   initSettings();
+  initToggles();
   renderLeaderboard();
   createBoard("medium");
   checkUsername();
   renderUsernameInHeader();
   preloadAudio();
-  
-  document.getElementById('leaderboardContainer').classList.add('collapsed');
 };
-// About Page Functions
-function showAboutPage() {
-  document.getElementById('aboutPage').style.display = 'flex';
-  console.log('About Page: දැන් පෙන්වනු ලැබේ (පරීක්ෂණ අවස්ථාව)');
-}
-
-function hideAboutPage() {
-  document.getElementById('aboutPage').style.display = 'none';
-  console.log('About Page: දැන් සඟවනු ලැබේ (පරීක්ෂණ අවස්ථාව)');
-}
-
-function closeAboutPage() {
-  document.getElementById('aboutPage').style.display = 'none';
-  console.log('About Page: පරිශීලකයා විසින් වැසීම');
-}
-
-// Debug Mode Check
-const debugMode = false; // true කරන්න පරීක්ෂණ සඳහා
-
-if(debugMode) {
-  document.querySelector('.debug-controls').style.display = 'flex';
-  console.log('Debug Mode: සක්‍රීයයි. About Page පාලන බොත්තම් පෙන්වනු ලැබේ');
-} else {
-  document.querySelector('.debug-controls').style.display = 'none';
-}
