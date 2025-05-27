@@ -479,4 +479,65 @@ window.onload = () => {
   checkUsername();
   renderUsernameInHeader();
   preloadAudio();
+};// Update the window.onload function at the bottom of your script.js
+window.onload = () => {
+  const splash = document.getElementById('splash');
+  const loadingBar = document.querySelector('.loading-bar');
+  const loadingPercentage = document.querySelector('.loading-percentage');
+  
+  // Simulate loading progress
+  let progress = 0;
+  const loadingInterval = setInterval(() => {
+    progress += Math.random() * 10;
+    if (progress > 100) progress = 100;
+    
+    loadingBar.style.width = `${progress}%`;
+    loadingPercentage.textContent = `${Math.floor(progress)}%`;
+    
+    // Change loading messages based on progress
+    const messages = [
+      "පද්ධතිය පූරණය වෙමින්...",
+      "කාඩ්පත් සූදානම් කරමින්...",
+      "තේමා පටිගත කරමින්...",
+      "ස්කෝර් ලබා ගැනීම...",
+      "සූදානම් වෙමින්..."
+    ];
+    
+    if (progress < 30) {
+      document.querySelector('.loading-message').textContent = messages[0];
+    } else if (progress < 50) {
+      document.querySelector('.loading-message').textContent = messages[1];
+    } else if (progress < 70) {
+      document.querySelector('.loading-message').textContent = messages[2];
+    } else if (progress < 90) {
+      document.querySelector('.loading-message').textContent = messages[3];
+    } else {
+      document.querySelector('.loading-message').textContent = messages[4];
+    }
+    
+    if (progress >= 100) {
+      clearInterval(loadingInterval);
+      splash.classList.add('fade-out');
+      
+      setTimeout(() => {
+        splash.remove();
+        initGame();
+      }, 500);
+    }
+  }, 200);
 };
+
+function initGame() {
+  // Initialize all your game components
+  initSettings();
+  initToggles();
+  renderLeaderboard();
+  createBoard("medium");
+  checkUsername();
+  renderUsernameInHeader();
+  preloadAudio();
+  checkClassicUnlock();
+}
+
+// The rest of your original JavaScript remains unchanged
+// ... all your existing game functions ...
