@@ -375,7 +375,7 @@ function showInstallButton() {
   const installBtn = document.createElement('button');
   installBtn.id = 'installBtn';
   installBtn.innerHTML = `
-    <img src="icons/icon-72x72.png" width="24" height="24">
+    <img src="icon-72.png" width="24" height="24">
     යෙදුම ස්ථාපනය කරන්න
   `;
   installBtn.style.cssText = `
