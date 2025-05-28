@@ -8,7 +8,7 @@ const urlsToCache = [
   '/mismatch.mp3',
   '/win.mp3',
   '/flip.mp3',
-  '/icons/icon-192.png',
+  '/icon-192.png',
   '/manifest.json'
 ];
 
