@@ -18,9 +18,3 @@
 - CSS3
 - JavaScript
 - Progressive Web App (PWA) තාක්ෂණය
-
-## ස්ථාපනය
-
-1. ගිට් රෙපෝසිටරිය clone කරන්න:
-   ```bash
-   git clone https://github.com/your-username/memory-game-sinhala.git
