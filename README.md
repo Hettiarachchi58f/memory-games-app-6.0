@@ -1,7 +1,5 @@
 # Memory-games-6
-# මතක තරඟය - Sinhala Memory Game
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+# මතක තරඟය - Sinhala Memory 
 
 සිංහල භාෂාවෙන් නිර්මාණය කරන ලද මතක ක්‍රීඩා යෙදුමකි. කාඩ්පත් ගැලපීමෙන් ඔබේ මතක ශක්තිය පරීක්ෂා කරන්න.
 
