@@ -1,25 +1,26 @@
-const CACHE_NAME = 'memory-game-v3';
-const urlsToCache = [
+const CACHE_NAME = 'memory-game-v8.1.3';
+const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
   '/style.css',
   '/script.js',
-  '/match.mp3',
-  '/mismatch.mp3',
-  '/win.mp3',
-  '/flip.mp3',
-  '/icon-192.png',
-  '/manifest.json'
+  '/manifest.json',
+  '/assets/images/icon-192.png',
+  '/assets/images/icon-512.png',
+  '/assets/images/creator-mobile.png',
+  '/assets/sounds/match.mp3',
+  '/assets/sounds/mismatch.mp3',
+  '/assets/sounds/win.mp3',
+  '/assets/sounds/flip.mp3',
+  '/assets/sounds/toggle.mp3',
+  '/assets/sounds/info.mp3',
+  'https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;700&display=swap'
 ];
 
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log('Cache opened');
-        return cache.addAll(urlsToCache);
-      })
-      .then(() => self.skipWaiting())
+      .then(cache => cache.addAll(ASSETS_TO_CACHE))
   );
 });
 
@@ -29,39 +30,17 @@ self.addEventListener('activate', event => {
       return Promise.all(
         cacheNames.map(cache => {
           if (cache !== CACHE_NAME) {
-            console.log('Deleting old cache');
             return caches.delete(cache);
           }
         })
       );
     })
   );
-  self.clients.claim();
 });
 
 self.addEventListener('fetch', event => {
-  if (event.request.method !== 'GET') return;
-  
   event.respondWith(
     caches.match(event.request)
-      .then(response => {
-        if (response) return response;
-
-        return fetch(event.request).then(response => {
-          if(!response || response.status !== 200 || response.type !== 'basic') {
-            return response;
-          }
-
-          const responseToCache = response.clone();
-          caches.open(CACHE_NAME)
-            .then(cache => cache.put(event.request, responseToCache));
-
-          return response;
-        }).catch(() => {
-          if (event.request.headers.get('accept').includes('text/html')) {
-            return caches.match('/offline.html');
-          }
-        });
-      })
+      .then(response => response || fetch(event.request))
   );
 });
