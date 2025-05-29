@@ -1,4 +1,6 @@
-const CACHE_NAME = 'memory-game-v8.1.4';
+[file name]: sw.js
+[file content begin]
+const CACHE_NAME = 'memory-game-v8.1.3';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
