@@ -52,7 +52,44 @@
       <button onclick="saveUsername()">සුරකින්න</button>
     </div>
   </div>
+<!-- Level Progress -->
+<div class="level-progress">
+  <div class="level-info">
+    <span class="level-label">ලෙවල්</span>
+    <span class="level-value">1</span>
+  </div>
+  <div class="progress-bar">
+    <div class="progress-fill"></div>
+  </div>
+  <div class="points-info">
+    <span class="points-value">0</span>/<span class="points-total">10</span>
+  </div>
+</div>
 
+<!-- Assistant Button -->
+<div id="assistantBtn" class="assistant-button">
+  <div class="assistant-icon">💡</div>
+  <div class="assistant-progress">
+    <svg viewBox="0 0 100 100">
+      <circle class="progress-ring" cx="50" cy="50" r="45"></circle>
+      <circle class="progress-fill" cx="50" cy="50" r="45"></circle>
+    </svg>
+  </div>
+</div>
+
+<!-- Assistant Instructions Modal -->
+<div id="assistantModal" class="modal">
+  <div class="modal-content">
+    <h3>ඇසිස්ටන්ට් උපදෙස්</h3>
+    <div class="assistant-message"></div>
+    <button onclick="closeAssistantModal()">හරි</button>
+  </div>
+</div>
+
+<!-- New audio elements -->
+<audio id="levelUpSound" src="level-up.mp3" preload="auto"></audio>
+<audio id="assistantSound" src="assistant.mp3" preload="auto"></audio>
+<audio id="timeSound" src="time-extend.mp3" preload="auto"></audio>
   <div class="container">
     <div class="header">
       <h1>මතක තරඟය</h1>
