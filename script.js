@@ -1074,8 +1074,19 @@ window.onload = () => {
     }
   }, 200);
 };
+// නව අන්තර්ජාල පරීක්ෂා කාර්යය
+function checkConnectivity() {
+  if (!navigator.onLine) {
+    window.location.href = 'offline.html';
+  }
+}
 
+// නව අන්තර්ජාල සිදුවීම්
+window.addEventListener('offline', () => {
+  window.location.href = 'offline.html';
+});// පිටු පූරණය කිරීමේ කාර්යයේ දී අන්තර්ජාල පරීක්ෂාව එක් කරන්න
 function initGame() {
+  checkConnectivity(); // මෙය එක් කරන්න
   initSettings();
   initToggles();
   initLevelSystem();
@@ -1086,4 +1097,5 @@ function initGame() {
   preloadAudio();
   checkClassicUnlock();
   makeAssistantDraggable();
-  }
+}
+
