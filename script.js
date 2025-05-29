@@ -1086,4 +1086,29 @@ function initGame() {
   preloadAudio();
   checkClassicUnlock();
   makeAssistantDraggable();
+}[file name]: script.js
+[file content begin]
+// ... existing code ...
+
+function initGame() {
+  checkConnectivity();
+  
+  // ශබ්ද පූර්ව පූරණය අක්‍රිය කරන්න
+  // preloadAudio(); // මෙම පේළිය අවලංගු කරන්න
+  
+  initSettings();
+  initToggles();
+  initLevelSystem();
+  renderLeaderboard();
+  createBoard("medium");
+  checkUsername();
+  renderUsernameInHeader();
+  checkClassicUnlock();
+  makeAssistantDraggable();
+  
+  // පූර්ව පූරණය වීමේ පණිවුඩය පෙන්වන්න
+  showHelperMessage("පද්ධතිය සූදානම්!", 2000);
 }
+
+// ... existing code ...
+[file content end]
