@@ -45,17 +45,168 @@ let lockBoard = false;
 let deferredPrompt;
 let easyRoundsCompleted = 0;
 let classicUnlocked = false;
-let helperActive = false;
 let helperInterval;
+
+// Level and Assistant System
+let currentLevel = 1;
+let currentPoints = 0;
+let requiredPoints = 10;
+let assistantPoints = 0;
+const maxAssistantPoints = 40;
+let previousBestTime = Infinity;
+let classicBestTime = localStorage.getItem('classicBestTime') || Infinity;
+let timeExtended = false;
+
+// Initialize level system
+function initLevelSystem() {
+  const savedLevel = localStorage.getItem('currentLevel');
+  const savedPoints = localStorage.getItem('currentPoints');
+  const savedAssistant = localStorage.getItem('assistantPoints');
+  
+  if (savedLevel) currentLevel = parseInt(savedLevel);
+  if (savedPoints) currentPoints = parseInt(savedPoints);
+  if (savedAssistant) assistantPoints = parseInt(savedAssistant);
+  
+  requiredPoints = calculateRequiredPoints(currentLevel);
+  updateLevelDisplay();
+  updateAssistantDisplay();
+}
+
+// Calculate required points for level
+function calculateRequiredPoints(level) {
+  return 10 + (level - 1) * 5;
+}
+
+// Earn points after game completion
+function earnPoints(difficulty, time) {
+  let pointsEarned = 0;
+  
+  switch(difficulty) {
+    case 'easy': pointsEarned = 2; break;
+    case 'medium': pointsEarned = 3; break;
+    case 'hard': pointsEarned = 4; break;
+    case 'classic': pointsEarned = 5; break;
+  }
+  
+  // Time bonus
+  if (time < previousBestTime) {
+    pointsEarned += 5;
+    previousBestTime = time;
+  }
+  
+  currentPoints += pointsEarned;
+  
+  // Check for level up
+  if (currentPoints >= requiredPoints) {
+    levelUp();
+  }
+  
+  updateLevelDisplay();
+  saveLevelProgress();
+}
+
+// Level up function
+function levelUp() {
+  currentLevel++;
+  currentPoints = currentPoints - requiredPoints;
+  requiredPoints = calculateRequiredPoints(currentLevel);
+  
+  // Play level up sound
+  if (soundEnabled) {
+    const levelUpSound = document.getElementById('levelUpSound');
+    levelUpSound.currentTime = 0;
+    levelUpSound.play();
+  }
+  
+  // Show level up message
+  showHelperMessage(`සුබ පතමු! ඔබ ලෙවල් ${currentLevel} ට උසස් විය!`, 4000);
+}
+
+// Earn assistant points
+function earnAssistantPoints(difficulty, time) {
+  let pointsEarned = 0;
+  
+  switch(difficulty) {
+    case 'easy': pointsEarned = 2; break;
+    case 'medium': pointsEarned = 4; break;
+    case 'hard': pointsEarned = 6; break;
+    case 'classic': pointsEarned = 10; break;
+  }
+  
+  // Time bonus
+  if (time < previousBestTime) {
+    pointsEarned += 5;
+  }
+  
+  assistantPoints += pointsEarned;
+  
+  // Cap at max
+  if (assistantPoints > maxAssistantPoints) {
+    assistantPoints = maxAssistantPoints;
+  }
+  
+  updateAssistantDisplay();
+  saveAssistantProgress();
+  
+  // Show assistant ready message
+  if (assistantPoints >= maxAssistantPoints) {
+    showHelperMessage("ඇසිස්ටන්ට් සූදානම්! උපදෙස් ලබා ගැනීමට ක්ලික් කරන්න", 4000);
+    
+    // Play assistant ready sound
+    if (soundEnabled) {
+      const assistantSound = document.getElementById('assistantSound');
+      assistantSound.currentTime = 0;
+      assistantSound.play();
+    }
+  }
+}
+
+// Update level display
+function updateLevelDisplay() {
+  document.querySelector('.level-value').textContent = currentLevel;
+  document.querySelector('.points-value').textContent = currentPoints;
+  document.querySelector('.points-total').textContent = requiredPoints;
+  
+  const progressPercent = (currentPoints / requiredPoints) * 100;
+  document.querySelector('.progress-fill').style.width = `${progressPercent}%`;
+}
+
+// Update assistant display
+function updateAssistantDisplay() {
+  const progressPercent = (assistantPoints / maxAssistantPoints) * 100;
+  const progressFill = document.querySelector('.assistant-progress .progress-fill');
+  
+  // Update circle progress
+  const circumference = 2 * Math.PI * 45;
+  const offset = circumference - (progressPercent / 100) * circumference;
+  
+  progressFill.style.strokeDasharray = `${circumference} ${circumference}`;
+  progressFill.style.strokeDashoffset = offset;
+  
+  // Change color when full
+  if (assistantPoints >= maxAssistantPoints) {
+    progressFill.style.stroke = '#FFC107';
+  } else {
+    progressFill.style.stroke = '#00796b';
+  }
+}
+
+// Save progress to localStorage
+function saveLevelProgress() {
+  localStorage.setItem('currentLevel', currentLevel);
+  localStorage.setItem('currentPoints', currentPoints);
+  localStorage.setItem('requiredPoints', requiredPoints);
+}
+
+function saveAssistantProgress() {
+  localStorage.setItem('assistantPoints', assistantPoints);
+}
 
 // Helper Messages
 const helperMessages = {
   unlock: "සුභ පැතුම්! ඔබ පහසු මට්ටම 10 වතාවක් ජයග්‍රහණය කර ඇත. ඔබට දැන් සම්භාව්‍ය මට්ටමට පිවිසිය හැකිය!",
-  intro: "මෙය සම්භාව්‍ය මට්ටමයි. කාඩ්පත් කෙටි වේලාවකට පෙන්වනු ලැබේ, පසුව ඒවා ආවරණය කරනු ලැබේ. මම ඔබට උදව් කරමි!",
-  timeExtended: "මම ඔබට කාලය දීර්ඝ කළා! (+5 තත්පර)",
-  hintOffered: "මෙන්න ඉඟියක්: මෙම කාඩ්පත් දෙක ගැලපිය හැකිය",
+  intro: "මෙය සම්භාව්‍ය මට්ටමයි. කාඩ්පත් කෙටි වේලාවකට පෙන්වනු ලැබේ, පසුව ඒවා ආවරණය කරනු ලැබේ.",
   victory: "ප්‍රශංසා! ඔබ සම්භාව්‍ය මට්ටම ජයග්‍රහණය කළා!",
-  encouragement: "ඔබට මෙය කළ හැකිය! දිගටම උත්සාහ කරන්න!"
 };
 
 // Initialize Service Worker
@@ -98,77 +249,6 @@ function checkClassicUnlock() {
     classicOption.value = 'classic';
     classicOption.textContent = 'සම්භාව්‍ය මට්ටම (4x4)';
     levelSelect.appendChild(classicOption);
-  }
-}
-
-function provideHelperAssistance() {
-  if (!helperActive) return;
-  
-  const helpType = Math.floor(Math.random() * 4); // 0-3
-  
-  switch(helpType) {
-    case 0: // Extend time
-      time += 5;
-      timerDisplay.textContent = time;
-      showHelperMessage(helperMessages.timeExtended);
-      break;
-      
-    case 1: // Offer hint
-      const unflippedCards = Array.from(document.querySelectorAll('.card:not(.flipped)'));
-      if (unflippedCards.length > 1) {
-        const randomIndex = Math.floor(Math.random() * unflippedCards.length);
-        const card = unflippedCards[randomIndex];
-        card.classList.add('hint');
-        setTimeout(() => card.classList.remove('hint'), 2000);
-        showHelperMessage(helperMessages.hintOffered);
-      }
-      break;
-      
-    case 2: // General encouragement
-      showHelperMessage(helperMessages.encouragement);
-      break;
-      
-    case 3: // Find a potential match
-      const unflipped = Array.from(document.querySelectorAll('.card:not(.flipped)'));
-      if (unflipped.length >= 2) {
-        // Find cards with matching values
-        const cardValues = {};
-        let matchFound = false;
-        
-        for (const card of unflipped) {
-          const value = card.dataset.value;
-          if (cardValues[value]) {
-            // Found a match
-            cardValues[value].classList.add('hint');
-            card.classList.add('hint');
-            setTimeout(() => {
-              cardValues[value].classList.remove('hint');
-              card.classList.remove('hint');
-            }, 2000);
-            showHelperMessage(helperMessages.hintOffered);
-            matchFound = true;
-            break;
-          }
-          cardValues[value] = card;
-        }
-        
-        if (!matchFound) {
-          // If no matches found, just highlight two random cards
-          const randomIndex1 = Math.floor(Math.random() * unflipped.length);
-          let randomIndex2 = Math.floor(Math.random() * unflipped.length);
-          while (randomIndex2 === randomIndex1) {
-            randomIndex2 = Math.floor(Math.random() * unflipped.length);
-          }
-          unflipped[randomIndex1].classList.add('hint');
-          unflipped[randomIndex2].classList.add('hint');
-          setTimeout(() => {
-            unflipped[randomIndex1].classList.remove('hint');
-            unflipped[randomIndex2].classList.remove('hint');
-          }, 2000);
-          showHelperMessage(helperMessages.hintOffered);
-        }
-      }
-      break;
   }
 }
 
@@ -216,6 +296,41 @@ function shuffle(array) {
 function updateTimer() {
   time++;
   timerDisplay.textContent = time;
+  
+  // Check if we need to extend time in classic mode
+  if (document.getElementById("levelSelect").value === 'classic') {
+    checkTimeExtension();
+  }
+}
+
+function checkTimeExtension() {
+  // If time is 10 seconds over best time and not yet extended
+  if (!timeExtended && time > classicBestTime + 10) {
+    extendClassicTime();
+  }
+}
+
+function extendClassicTime() {
+  // Add 5 seconds
+  time += 5;
+  timerDisplay.textContent = time;
+  timeExtended = true;
+  
+  // Visual feedback
+  timerDisplay.classList.add('time-added');
+  setTimeout(() => {
+    timerDisplay.classList.remove('time-added');
+  }, 1000);
+  
+  // Show helper message
+  showHelperMessage("කාලය 5 තත්පර වැඩි කරන ලදී!", 3000);
+  
+  // Play sound
+  if (soundEnabled) {
+    const timeSound = document.getElementById('timeSound');
+    timeSound.currentTime = 0;
+    timeSound.play();
+  }
 }
 
 function createBoard(level) {
@@ -228,7 +343,7 @@ function createBoard(level) {
   firstCard = null;
   secondCard = null;
   lockBoard = false;
-  helperActive = false;
+  timeExtended = false;
   
   timerDisplay.textContent = "0";
   attemptsDisplay.textContent = "0";
@@ -251,7 +366,6 @@ function createBoard(level) {
   } else if (level === "classic") {
     pairCount = 8;
     columns = 4;
-    helperActive = true;
   }
 
   totalPairs = pairCount;
@@ -289,8 +403,6 @@ function createBoard(level) {
         card.textContent = '?';
         card.classList.remove('flipped');
       });
-      // Start helper assistance
-      helperInterval = setInterval(provideHelperAssistance, 15000);
     }, 5000);
   }
 }
@@ -347,6 +459,7 @@ function checkForMatch() {
       }
       
       if (level === "classic") {
+        afterClassicWin();
         showHelperMessage(helperMessages.victory, 5000);
       }
       
@@ -354,6 +467,8 @@ function checkForMatch() {
         winSound.currentTime = 0;
         winSound.play();
       }
+      
+      afterGameWin(time, attempts);
       showWinMessage();
       saveScore(time, attempts);
     }
@@ -372,6 +487,37 @@ function checkForMatch() {
       resetBoard();
     }, 800);
   }
+}
+
+// After winning classic mode
+function afterClassicWin() {
+  // Update best time if current time is better
+  if (time < classicBestTime) {
+    classicBestTime = time;
+    localStorage.setItem('classicBestTime', classicBestTime);
+    showHelperMessage(`නව කාල වාර්තාව! ${classicBestTime} තත්පර`, 4000);
+  }
+}
+
+// After winning a game
+function afterGameWin(time, attempts) {
+  const level = document.getElementById("levelSelect").value;
+  
+  // Earn points
+  earnPoints(level, time);
+  earnAssistantPoints(level, time);
+  
+  // Additional logic for first level
+  if (currentLevel === 1) {
+    showFirstLevelInstructions();
+  }
+}
+
+// First level instructions
+function showFirstLevelInstructions() {
+  setTimeout(() => {
+    showAssistantMessage("ප්‍රථම ලෙවල් සාර්ථකව අවසන් කළා! ලෙවල් ඉහළ නැංවීමට පොයින් රැස් කරන්න. උපදෙස් සඳහා ඇසිස්ටන් බොත්තම භාවිතා කරන්න.");
+  }, 2000);
 }
 
 function resetBoard() {
@@ -620,6 +766,12 @@ function initSettings() {
   
   // Easy rounds completed
   easyRoundsCompleted = parseInt(localStorage.getItem('easyRounds') || '0');
+  
+  // Load classic best time
+  const savedBestTime = localStorage.getItem('classicBestTime');
+  if (savedBestTime) {
+    classicBestTime = parseInt(savedBestTime);
+  }
 }
 
 // Preload Audio
@@ -644,26 +796,238 @@ function handleBackButton() {
   }
 }
 
-// On Page Load
-window.onload = () => {
-  // Hide splash screen
-  setTimeout(() => {
-    const splash = document.getElementById('splash');
-    if (splash) {
-      splash.style.opacity = '0';
-      setTimeout(() => splash.remove(), 500);
-    }
-  }, 2000);
+// Assistant button functionality
+document.getElementById('assistantBtn').addEventListener('click', function() {
+  if (assistantPoints < maxAssistantPoints) {
+    showAssistantMessage("ඇසිස්ටන්ට් තවම සූදානම් වී නැත. පොයින් රැස් කරන්න!");
+    return;
+  }
+
+  const level = document.getElementById("levelSelect").value;
+  const helpType = Math.floor(Math.random() * 4) + 1; // 1-4
   
-  initSettings();
-  initToggles();
-  renderLeaderboard();
-  createBoard("medium");
-  checkUsername();
-  renderUsernameInHeader();
-  preloadAudio();
-  checkClassicUnlock();
-};// Update the window.onload function
+  switch(helpType) {
+    case 1: // Provide hint
+      provideHint();
+      showAssistantMessage("ඉඟියක්: මෙම කාඩ්පත් ගැලපිය හැකිය!");
+      break;
+      
+    case 2: // Show all cards briefly
+      showAllCardsBriefly();
+      showAssistantMessage("සියලුම කාඩ්පත් 5 තත්පරයකට පෙන්වනු ලැබේ!");
+      break;
+      
+    case 3: // Add extra time (only in classic mode)
+      if (level === 'classic') {
+        addExtraTime();
+        showAssistantMessage("කාලය 5 තත්පර වැඩි කරන ලදී!");
+      } else {
+        provideHint();
+        showAssistantMessage("ඉඟියක්: මෙම කාඩ්පත් ගැලපිය හැකිය!");
+      }
+      break;
+      
+    case 4: // Reduce time (only in classic mode)
+      if (level === 'classic') {
+        reduceElapsedTime();
+        showAssistantMessage("කාලය 10 තත්පර අඩු කරන ලදී!");
+      } else {
+        provideHint();
+        showAssistantMessage("ඉඟියක්: මෙම කාඩ්පත් ගැලපිය හැකිය!");
+      }
+      break;
+  }
+  
+  // Reset assistant points
+  assistantPoints = 0;
+  updateAssistantDisplay();
+  saveAssistantProgress();
+});
+
+// Provide hint to player
+function provideHint() {
+  const unflippedCards = Array.from(document.querySelectorAll('.card:not(.flipped)'));
+  
+  if (unflippedCards.length < 2) {
+    showAssistantMessage("කාඩ්පත් ප්‍රමාණවත් නැත!");
+    return;
+  }
+  
+  // Find a matching pair
+  const cardValues = {};
+  let matchFound = false;
+  
+  for (const card of unflippedCards) {
+    const value = card.dataset.value;
+    if (cardValues[value]) {
+      // Found a match, highlight both cards
+      cardValues[value].classList.add('hint');
+      card.classList.add('hint');
+      matchFound = true;
+      
+      setTimeout(() => {
+        cardValues[value].classList.remove('hint');
+        card.classList.remove('hint');
+      }, 2000);
+      
+      break;
+    }
+    cardValues[value] = card;
+  }
+  
+  if (!matchFound) {
+    // If no matches, highlight two random cards
+    const randomIndex1 = Math.floor(Math.random() * unflippedCards.length);
+    let randomIndex2 = Math.floor(Math.random() * unflippedCards.length);
+    while (randomIndex2 === randomIndex1) {
+      randomIndex2 = Math.floor(Math.random() * unflippedCards.length);
+    }
+    
+    unflippedCards[randomIndex1].classList.add('hint');
+    unflippedCards[randomIndex2].classList.add('hint');
+    
+    setTimeout(() => {
+      unflippedCards[randomIndex1].classList.remove('hint');
+      unflippedCards[randomIndex2].classList.remove('hint');
+    }, 2000);
+  }
+}
+
+// Show all cards briefly
+function showAllCardsBriefly() {
+  const cards = document.querySelectorAll('.card:not(.matched)');
+  lockBoard = true;
+  
+  // Flip all cards
+  cards.forEach(card => {
+    card.textContent = card.dataset.value;
+    card.classList.add('flipped');
+  });
+  
+  // Flip back after 5 seconds
+  setTimeout(() => {
+    cards.forEach(card => {
+      if (!card.classList.contains('matched')) {
+        card.textContent = '?';
+        card.classList.remove('flipped');
+      }
+    });
+    lockBoard = false;
+  }, 5000);
+}
+
+// Add extra time
+function addExtraTime() {
+  time += 5;
+  timerDisplay.textContent = time;
+  
+  // Visual feedback
+  timerDisplay.classList.add('time-added');
+  setTimeout(() => {
+    timerDisplay.classList.remove('time-added');
+  }, 1000);
+}
+
+// Reduce elapsed time (only for classic mode)
+function reduceElapsedTime() {
+  // Reduce by 10 seconds, but don't go below 0
+  time = Math.max(0, time - 10);
+  timerDisplay.textContent = time;
+  
+  // Visual feedback
+  timerDisplay.classList.add('time-reduced');
+  setTimeout(() => {
+    timerDisplay.classList.remove('time-reduced');
+  }, 1000);
+  
+  // Play sound
+  if (soundEnabled) {
+    const timeSound = document.getElementById('timeSound');
+    timeSound.currentTime = 0;
+    timeSound.play();
+  }
+}
+
+// Show assistant message
+function showAssistantMessage(message) {
+  const modal = document.getElementById('assistantModal');
+  const messageElement = modal.querySelector('.assistant-message');
+  
+  messageElement.textContent = message;
+  modal.classList.add('show');
+}
+
+function closeAssistantModal() {
+  document.getElementById('assistantModal').classList.remove('show');
+}
+
+// Make assistant button draggable
+function makeAssistantDraggable() {
+  const assistantBtn = document.getElementById('assistantBtn');
+  let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  
+  assistantBtn.onmousedown = dragMouseDown;
+  assistantBtn.ontouchstart = dragTouchStart;
+
+  function dragMouseDown(e) {
+    e.preventDefault();
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    document.onmousemove = elementDrag;
+  }
+
+  function dragTouchStart(e) {
+    const touch = e.touches[0];
+    pos3 = touch.clientX;
+    pos4 = touch.clientY;
+    document.ontouchend = closeDragElement;
+    document.ontouchmove = elementDragTouch;
+  }
+
+  function elementDrag(e) {
+    e.preventDefault();
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    assistantBtn.style.top = (assistantBtn.offsetTop - pos2) + "px";
+    assistantBtn.style.left = (assistantBtn.offsetLeft - pos1) + "px";
+  }
+
+  function elementDragTouch(e) {
+    const touch = e.touches[0];
+    pos1 = pos3 - touch.clientX;
+    pos2 = pos4 - touch.clientY;
+    pos3 = touch.clientX;
+    pos4 = touch.clientY;
+    assistantBtn.style.top = (assistantBtn.offsetTop - pos2) + "px";
+    assistantBtn.style.left = (assistantBtn.offsetLeft - pos1) + "px";
+  }
+
+  function closeDragElement() {
+    document.onmouseup = null;
+    document.onmousemove = null;
+    document.ontouchend = null;
+    document.ontouchmove = null;
+    
+    // Save position
+    localStorage.setItem('assistantPos', JSON.stringify({
+      top: assistantBtn.style.top,
+      left: assistantBtn.style.left
+    }));
+  }
+  
+  // Load saved position
+  const savedPos = localStorage.getItem('assistantPos');
+  if (savedPos) {
+    const pos = JSON.parse(savedPos);
+    assistantBtn.style.top = pos.top;
+    assistantBtn.style.left = pos.left;
+  }
+}
+
+// On Page Load
 window.onload = () => {
   const splash = document.getElementById('splash');
   const loadingBar = document.querySelector('.loading-bar');
@@ -714,10 +1078,12 @@ window.onload = () => {
 function initGame() {
   initSettings();
   initToggles();
+  initLevelSystem();
   renderLeaderboard();
   createBoard("medium");
   checkUsername();
   renderUsernameInHeader();
   preloadAudio();
   checkClassicUnlock();
-}
+  makeAssistantDraggable();
+  }
