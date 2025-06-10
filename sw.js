@@ -14,6 +14,7 @@ const urlsToCache = [
   '/memory-games-app-6.0/win.mp3',
   '/memory-games-app-6.0/toggle.mp3',
   '/memory-games-app-6.0/info.mp3',
+  '/memory-games-app-6.0/time-up.mp3',
   'https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;700&display=swap'
 ];
 
