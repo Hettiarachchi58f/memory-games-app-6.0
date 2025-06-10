@@ -349,6 +349,104 @@ input[type="range"]::-webkit-slider-thumb {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
+/* Time Up Message */
+#timeUpMessage {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+#timeUpMessage.show {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.time-up-content {
+  background-color: var(--card-bg);
+  padding: 25px;
+  border-radius: var(--border-radius);
+  text-align: center;
+  max-width: 90%;
+  width: 350px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.clock-icon {
+  font-size: 4rem;
+  margin-bottom: 15px;
+  color: #ff5252;
+}
+
+.time-up-title {
+  color: #ff5252;
+  margin-bottom: 10px;
+}
+
+.time-up-subtitle {
+  margin-bottom: 20px;
+}
+
+.time-up-stats {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px 0;
+}
+
+.time-up-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: var(--primary-light);
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.time-up-buttons {
+  margin-top: 20px;
+}
+
+.time-up-button {
+  background-color: #ff5252;
+  color: white;
+  border: none;
+  padding: 14px 25px;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 auto;
+  transition: all 0.3s;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.time-up-button:hover {
+  background-color: #d32f2f;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
 /* Leaderboard Toggle Styles */
 .leaderboard-toggle {
   background-color: var(--primary-light);
@@ -607,6 +705,44 @@ input[type="range"]::-webkit-slider-thumb {
   100% { transform: scale(1); }
 }
 
+/* Time Added Animation */
+.time-added {
+  animation: timePulse 1s ease;
+  color: #FFC107;
+  font-weight: bold;
+}
+
+@keyframes timePulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+/* Time Reduced Animation */
+.time-reduced {
+  animation: timeReducePulse 1s ease;
+  color: #4CAF50;
+  font-weight: bold;
+}
+
+@keyframes timeReducePulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.8); }
+  100% { transform: scale(1); }
+}
+
+/* Low Time Warning */
+.time-low {
+  color: #ff5252 !important;
+  animation: pulseWarning 1s infinite;
+}
+
+@keyframes pulseWarning {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
 /* Responsive Design */
 @media (min-width: 768px) {
   .container {
@@ -639,7 +775,9 @@ input[type="range"]::-webkit-slider-thumb {
   .header {
     padding-top: 30px;
   }
-}/* නවතම Loading Screen Styles */
+}
+
+/* නවතම Loading Screen Styles */
 .splash-screen {
   position: fixed;
   top: 0;
@@ -796,7 +934,9 @@ input[type="range"]::-webkit-slider-thumb {
 
 @keyframes fadeOut {
   to { opacity: 0; visibility: hidden; }
-}/* Level Progress */
+}
+
+/* Level Progress */
 .level-progress {
   display: flex;
   align-items: center;
@@ -913,32 +1053,6 @@ input[type="range"]::-webkit-slider-thumb {
   line-height: 1.5;
 }
 
-/* Time Added Animation */
-.time-added {
-  animation: timePulse 1s ease;
-  color: #FFC107;
-  font-weight: bold;
-}
-
-@keyframes timePulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.2); }
-  100% { transform: scale(1); }
-}
-
-/* Time Reduced Animation */
-.time-reduced {
-  animation: timeReducePulse 1s ease;
-  color: #4CAF50;
-  font-weight: bold;
-}
-
-@keyframes timeReducePulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(0.8); }
-  100% { transform: scale(1); }
-}
-
 /* Best Time Indicator */
 .best-time-indicator {
   position: absolute;
@@ -950,4 +1064,4 @@ input[type="range"]::-webkit-slider-thumb {
   border-radius: 15px;
   font-size: 0.9rem;
   z-index: 10;
-  }
+}
