@@ -19,7 +19,8 @@ const themeNames = {
   foods: 'ආහාර'
 };
 
-const CLASSIC_UNLOCK_REQUIREMENT = 10; // Easy rounds needed to unlock classic mode
+const CLASSIC_UNLOCK_REQUIREMENT = 10;
+const CLASSIC_TIME_LIMIT = 60; // 60 seconds for classic mode
 
 // DOM Elements
 const board = document.getElementById("gameBoard");
@@ -207,6 +208,7 @@ const helperMessages = {
   unlock: "සුභ පැතුම්! ඔබ පහසු මට්ටම 10 වතාවක් ජයග්‍රහණය කර ඇත. ඔබට දැන් සම්භාව්‍ය මට්ටමට පිවිසිය හැකිය!",
   intro: "මෙය සම්භාව්‍ය මට්ටමයි. කාඩ්පත් කෙටි වේලාවකට පෙන්වනු ලැබේ, පසුව ඒවා ආවරණය කරනු ලැබේ.",
   victory: "ප්‍රශංසා! ඔබ සම්භාව්‍ය මට්ටම ජයග්‍රහණය කළා!",
+  timeUp: "කාලය ගෙවී ඇත! නැවත උත්සාහ කරන්න.",
 };
 
 // Initialize Service Worker
@@ -294,42 +296,32 @@ function shuffle(array) {
 }
 
 function updateTimer() {
-  time++;
-  timerDisplay.textContent = time;
+  const level = document.getElementById("levelSelect").value;
   
-  // Check if we need to extend time in classic mode
-  if (document.getElementById("levelSelect").value === 'classic') {
-    checkTimeExtension();
-  }
-}
-
-function checkTimeExtension() {
-  // If time is 10 seconds over best time and not yet extended
-  if (!timeExtended && time > classicBestTime + 10) {
-    extendClassicTime();
-  }
-}
-
-function extendClassicTime() {
-  // Add 5 seconds
-  time += 5;
-  timerDisplay.textContent = time;
-  timeExtended = true;
-  
-  // Visual feedback
-  timerDisplay.classList.add('time-added');
-  setTimeout(() => {
-    timerDisplay.classList.remove('time-added');
-  }, 1000);
-  
-  // Show helper message
-  showHelperMessage("කාලය 5 තත්පර වැඩි කරන ලදී!", 3000);
-  
-  // Play sound
-  if (soundEnabled) {
-    const timeSound = document.getElementById('timeSound');
-    timeSound.currentTime = 0;
-    timeSound.play();
+  if (level === 'classic') {
+    // Count down for classic mode
+    time--;
+    timerDisplay.textContent = time;
+    
+    // Add visual effect when time is low
+    if (time <= 10) {
+      timerDisplay.classList.add('time-low');
+    } else {
+      timerDisplay.classList.remove('time-low');
+    }
+    
+    // Check if time is up
+    if (time <= 0) {
+      clearInterval(timer);
+      time = 0;
+      timerDisplay.textContent = time;
+      lockBoard = true;
+      showTimeUpMessage();
+    }
+  } else {
+    // Count up for other levels
+    time++;
+    timerDisplay.textContent = time;
   }
 }
 
@@ -337,7 +329,14 @@ function createBoard(level) {
   board.innerHTML = "";
   clearInterval(timer);
   if (helperInterval) clearInterval(helperInterval);
-  time = 0;
+  
+  // Reset time based on level
+  if (level === "classic") {
+    time = CLASSIC_TIME_LIMIT;
+  } else {
+    time = 0;
+  }
+  
   attempts = 0;
   matches = 0;
   firstCard = null;
@@ -345,10 +344,14 @@ function createBoard(level) {
   lockBoard = false;
   timeExtended = false;
   
-  timerDisplay.textContent = "0";
+  timerDisplay.textContent = time;
   attemptsDisplay.textContent = "0";
   matchesDisplay.textContent = "0";
-  timer = setInterval(updateTimer, 1000);
+  
+  // Start timer based on level
+  if (level !== "classic") {
+    timer = setInterval(updateTimer, 1000);
+  }
 
   currentTheme = document.getElementById("themeSelect").value;
   const emojis = themes[currentTheme];
@@ -403,6 +406,8 @@ function createBoard(level) {
         card.textContent = '?';
         card.classList.remove('flipped');
       });
+      // Start the countdown timer after cards flip back
+      timer = setInterval(updateTimer, 1000);
     }, 5000);
   }
 }
@@ -586,6 +591,25 @@ function hideWinMessage() {
   document.getElementById('winMessage').classList.remove('show');
 }
 
+function showTimeUpMessage() {
+  document.getElementById('timeUpMatches').textContent = matches;
+  document.getElementById('timeUpTotalPairs').textContent = totalPairs;
+  document.getElementById('timeUpAttempts').textContent = attempts;
+  
+  document.getElementById('timeUpMessage').classList.add('show');
+  
+  // Play time up sound
+  if (soundEnabled) {
+    const timeUpSound = document.getElementById('timeUpSound');
+    timeUpSound.currentTime = 0;
+    timeUpSound.play();
+  }
+}
+
+function hideTimeUpMessage() {
+  document.getElementById('timeUpMessage').classList.remove('show');
+}
+
 function showInstructions() {
   document.getElementById('instructionsModal').classList.add('show');
 }
@@ -610,10 +634,11 @@ function startGame() {
 
 function restartGame() {
   const level = document.getElementById("levelSelect").value;
+  hideWinMessage();
+  hideTimeUpMessage();
   createBoard(level);
   showControls();
   document.getElementById("gameContainer").classList.remove("game-focused");
-  hideWinMessage();
 }
 
 function showControls() {
@@ -776,7 +801,7 @@ function initSettings() {
 
 // Preload Audio
 function preloadAudio() {
-  [matchSound, mismatchSound, winSound, flipSound, toggleSound, infoSound].forEach(sound => {
+  [matchSound, mismatchSound, winSound, flipSound, toggleSound, infoSound, timeUpSound].forEach(sound => {
     if (sound.readyState === 4) return;
     sound.load().catch(e => console.log("Audio preload failed:", e));
   });
@@ -918,14 +943,25 @@ function showAllCardsBriefly() {
 
 // Add extra time
 function addExtraTime() {
-  time += 5;
-  timerDisplay.textContent = time;
+  const level = document.getElementById("levelSelect").value;
+  
+  if (level === 'classic') {
+    time += 5;
+    timerDisplay.textContent = time;
+  }
   
   // Visual feedback
   timerDisplay.classList.add('time-added');
   setTimeout(() => {
     timerDisplay.classList.remove('time-added');
   }, 1000);
+  
+  // Play sound
+  if (soundEnabled) {
+    const timeSound = document.getElementById('timeSound');
+    timeSound.currentTime = 0;
+    timeSound.play();
+  }
 }
 
 // Reduce elapsed time (only for classic mode)
@@ -1074,19 +1110,8 @@ window.onload = () => {
     }
   }, 200);
 };
-// නව අන්තර්ජාල පරීක්ෂා කාර්යය
-function checkConnectivity() {
-  if (!navigator.onLine) {
-    window.location.href = 'offline.html';
-  }
-}
 
-// නව අන්තර්ජාල සිදුවීම්
-window.addEventListener('offline', () => {
-  window.location.href = 'offline.html';
-});// පිටු පූරණය කිරීමේ කාර්යයේ දී අන්තර්ජාල පරීක්ෂාව එක් කරන්න
 function initGame() {
-  checkConnectivity(); // මෙය එක් කරන්න
   initSettings();
   initToggles();
   initLevelSystem();
@@ -1098,4 +1123,3 @@ function initGame() {
   checkClassicUnlock();
   makeAssistantDraggable();
 }
-
