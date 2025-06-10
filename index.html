@@ -90,8 +90,7 @@
 <audio id="levelUpSound" src="level-up.mp3" preload="auto"></audio>
 <audio id="assistantSound" src="assistantSound.mp3" preload="auto"></audio>
 <audio id="timeSound" src="timeSound.mp3" preload="auto"></audio>
-
-<!-- ... existing code ... -->
+<audio id="timeUpSound" src="time-up.mp3" preload="auto"></audio>
 
 <!-- පවතින ශබ්ද අංග -->
 <audio id="matchSound" src="match.mp3" preload="auto"></audio>
@@ -101,7 +100,6 @@
 <audio id="toggleSound" src="toggle.mp3" preload="auto"></audio>
 <audio id="infoSound" src="info.mp3" preload="auto"></audio>
 
-<!-- ... existing code ... -->
   <div class="container">
     <div class="header">
       <h1>මතක තරඟය</h1>
@@ -118,6 +116,7 @@
           <option value="easy">පහසු (4x2)</option>
           <option value="medium" selected>මධ්‍යම (4x4)</option>
           <option value="hard">උපරිම (6x4)</option>
+          <option value="classic">සම්භාව්‍ය (4x4)</option>
         </select>
       </div>
       <div class="control-group">
@@ -177,6 +176,31 @@
         </div>
       </div>
     </div>
+    
+    <!-- Time Up Message -->
+    <div id="timeUpMessage" class="hidden">
+      <div class="time-up-content">
+        <div class="clock-icon">⏱️</div>
+        <h2 class="time-up-title">කාලය ගෙවී ඇත!</h2>
+        <p class="time-up-subtitle">කණගාටුයි, ඔබ කාලය තුළ තරඟය අවසන් කළ නොහැකි විය</p>
+        <div class="time-up-stats">
+          <div class="time-up-stat">
+            <span class="stat-label">ගැලපීම්:</span>
+            <span class="stat-value" id="timeUpMatches">0</span>/<span id="timeUpTotalPairs">0</span>
+          </div>
+          <div class="time-up-stat">
+            <span class="stat-label">පිවිසුම්:</span>
+            <span class="stat-value" id="timeUpAttempts">0</span>
+          </div>
+        </div>
+        <div class="time-up-buttons">
+          <button class="time-up-button restart-btn" onclick="restartGame()">
+            <span class="button-icon">↻</span>
+            <span>නැවත උත්සාහ කරන්න</span>
+          </button>
+        </div>
+      </div>
+    </div>
 
     <!-- Leaderboard Toggle Button -->
     <div class="leaderboard-header">
@@ -215,17 +239,6 @@
         <button onclick="closeInstructions()">හරි</button>
       </div>
     </div>
-
-    <!-- නව ශබ්ද අංග -->
-<audio id="levelUpSound" src="win.mp3" preload="auto"></audio>
-<audio id="assistantSound" src="win.mp3" preload="auto"></audio>
-<audio id="timeSound" src="win.mp3" preload="auto"></audio>
-    <audio id="matchSound" src="match.mp3" preload="auto"></audio>
-    <audio id="mismatchSound" src="mismatch.mp3" preload="auto"></audio>
-    <audio id="winSound" src="win.mp3" preload="auto"></audio>
-    <audio id="flipSound" src="flip.mp3" preload="auto"></audio>
-    <audio id="toggleSound" src="toggle.mp3" preload="auto"></audio>
-    <audio id="infoSound" src="info.mp3" preload="auto"></audio>
   </div>
 
   <script src="script.js"></script>
