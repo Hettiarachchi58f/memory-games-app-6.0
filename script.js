@@ -1,3 +1,4 @@
+
 // Game Constants
 const themes = {
   sinhala: ['අ', 'ආ', 'ඇ', 'ඈ', 'ඉ', 'ඊ', 'උ', 'ඌ', 'එ', 'ඔ', 'ක', 'ග', 'ච', 'ජ', 'ට', 'ඩ'],
@@ -286,6 +287,20 @@ function updateCardSize() {
   localStorage.setItem('cardSize', cardSize);
 }
 
+// හොඳම කාලය යාවත්කාලීන කිරීමේ ශ්රිතය
+function updateBestTimeDisplay() {
+  const bestTimeDisplay = document.getElementById('bestTimeDisplay');
+  const bestTimeValue = document.getElementById('bestTimeValue');
+  const level = document.getElementById('levelSelect').value;
+
+  if (level === 'classic') {
+    bestTimeDisplay.classList.remove('hidden');
+    bestTimeValue.textContent = classicBestTime === Infinity ? '∞' : classicBestTime;
+  } else {
+    bestTimeDisplay.classList.add('hidden');
+  }
+}
+
 // Game Functions
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -347,6 +362,9 @@ function createBoard(level) {
   timerDisplay.textContent = time;
   attemptsDisplay.textContent = "0";
   matchesDisplay.textContent = "0";
+  
+  // Update best time display
+  updateBestTimeDisplay();
   
   // Start timer based on level
   if (level !== "classic") {
@@ -501,6 +519,7 @@ function afterClassicWin() {
     classicBestTime = time;
     localStorage.setItem('classicBestTime', classicBestTime);
     showHelperMessage(`නව කාල වාර්තාව! ${classicBestTime} තත්පර`, 4000);
+    updateBestTimeDisplay(); // හොඳම කාලය යාවත්කාලීන කරන්න
   }
 }
 
@@ -1047,11 +1066,6 @@ function makeAssistantDraggable() {
     document.ontouchend = null;
     document.ontouchmove = null;
     
-    // Save position
-    localStorage.setItem('assistantPos', JSON.stringify({
-      top: assistantBtn.style.top,
-      left: assistantBtn.style.left
-    }));
   }
   
   // Load saved position
@@ -1122,4 +1136,9 @@ function initGame() {
   preloadAudio();
   checkClassicUnlock();
   makeAssistantDraggable();
+  
+  // Add event listener for level select change
+  document.getElementById('levelSelect').addEventListener('change', function() {
+    updateBestTimeDisplay();
+  });
 }
