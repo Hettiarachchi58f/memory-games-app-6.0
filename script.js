@@ -1,4 +1,3 @@
-
 // Game Constants
 const themes = {
   sinhala: ['අ', 'ආ', 'ඇ', 'ඈ', 'ඉ', 'ඊ', 'උ', 'ඌ', 'එ', 'ඔ', 'ක', 'ග', 'ච', 'ජ', 'ට', 'ඩ'],
@@ -1066,6 +1065,11 @@ function makeAssistantDraggable() {
     document.ontouchend = null;
     document.ontouchmove = null;
     
+    // Save position
+    localStorage.setItem('assistantPos', JSON.stringify({
+      top: assistantBtn.style.top,
+      left: assistantBtn.style.left
+    }));
   }
   
   // Load saved position
