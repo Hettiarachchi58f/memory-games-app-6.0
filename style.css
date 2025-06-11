@@ -205,10 +205,36 @@ input[type="range"]::-webkit-slider-thumb {
   font-size: 0.9rem;
 }
 
+/* හොඳම කාල දර්ශකය */
+#bestTimeDisplay {
+  font-size: 0.9rem;
+  color: var(--primary-light);
+  margin-top: 5px;
+}
+
+#bestTimeValue {
+  font-weight: bold;
+  color: var(--secondary-color);
+}
+
+/* හොඳම කාල දර්ශකය සඳහා විශේෂ ස්ථානගත කිරීම */
+.best-time-indicator {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 121, 107, 0.8);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 0.9rem;
+  z-index: 10;
+}
+
 /* Game Board */
 .game-container {
   width: 100%;
   margin-bottom: 20px;
+  position: relative;
 }
 
 .game-board {
@@ -743,6 +769,11 @@ input[type="range"]::-webkit-slider-thumb {
   100% { opacity: 1; }
 }
 
+/* Hidden Class */
+.hidden {
+  display: none;
+}
+
 /* Responsive Design */
 @media (min-width: 768px) {
   .container {
@@ -1051,17 +1082,4 @@ input[type="range"]::-webkit-slider-thumb {
   border-radius: var(--border-radius);
   font-size: 1rem;
   line-height: 1.5;
-}
-
-/* Best Time Indicator */
-.best-time-indicator {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: rgba(0, 121, 107, 0.8);
-  color: white;
-  padding: 5px 10px;
-  border-radius: 15px;
-  font-size: 0.9rem;
-  z-index: 10;
 }
