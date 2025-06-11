@@ -1,19 +1,8 @@
-<!DOCTYPE html>
-<html lang="si">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>මතක තරඟය</title>
-  <meta name="theme-color" content="#00796b">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="මතක තරඟය">
-  <link rel="apple-touch-icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;700&display=swap" rel="stylesheet">
-</head>
-<body>
+
   <!-- නවතම Loading Screen -->
 <div id="splash" class="splash-screen">
   <div class="splash-content">
@@ -144,6 +133,8 @@
       <div id="info">
         <p>කාලය: <span id="timer">0</span> තත්පර</p>
         <p>පිවිසුම්: <span id="attempts">0</span></p>
+        <!-- හොඳම කාල දර්ශකය -->
+        <p id="bestTimeDisplay" class="hidden">හොඳම කාලය: <span id="bestTimeValue">∞</span> තත්.</p>
       </div>
       <div id="matchInfo">
         <p>ගැලපීම්: <span id="matches">0</span>/<span id="totalPairs">0</span></p>
@@ -240,7 +231,3 @@
       </div>
     </div>
   </div>
-
-  <script src="script.js"></script>
-</body>
-</html>
