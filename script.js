@@ -480,8 +480,12 @@ function checkForMatch() {
         checkClassicUnlock();
       }
       
+      // Calculate final time
+      let finalTime = time;
       if (level === "classic") {
-        afterClassicWin();
+        // For classic mode: time taken = total time - remaining time
+        finalTime = CLASSIC_TIME_LIMIT - time;
+        afterClassicWin(finalTime);
         showHelperMessage(helperMessages.victory, 5000);
       }
       
@@ -490,9 +494,9 @@ function checkForMatch() {
         winSound.play();
       }
       
-      afterGameWin(time, attempts);
-      showWinMessage();
-      saveScore(time, attempts);
+      afterGameWin(finalTime, attempts);
+      showWinMessage(finalTime, attempts);
+      saveScore(finalTime, attempts);
     }
     
     resetBoard();
@@ -512,10 +516,10 @@ function checkForMatch() {
 }
 
 // After winning classic mode
-function afterClassicWin() {
+function afterClassicWin(finalTime) {
   // Update best time if current time is better
-  if (time < classicBestTime) {
-    classicBestTime = time;
+  if (finalTime < classicBestTime) {
+    classicBestTime = finalTime;
     localStorage.setItem('classicBestTime', classicBestTime);
     showHelperMessage(`නව කාල වාර්තාව! ${classicBestTime} තත්පර`, 4000);
     updateBestTimeDisplay(); // හොඳම කාලය යාවත්කාලීන කරන්න
@@ -594,8 +598,8 @@ function getLevelName(level) {
 }
 
 // UI Functions
-function showWinMessage() {
-  document.getElementById('finalTime').textContent = time;
+function showWinMessage(finalTime, attempts) {
+  document.getElementById('finalTime').textContent = finalTime;
   document.getElementById('finalAttempts').textContent = attempts;
   document.getElementById('winMessage').classList.add('show');
   
