@@ -846,13 +846,18 @@ function handleBackButton() {
 
 // Assistant button functionality
 document.getElementById('assistantBtn').addEventListener('click', function() {
+  if (lockBoard) {
+    showAssistantMessage("තරඟය අවසන්! නව තරඟයක් අරඹන්න.");
+    return;
+  }
+
   if (assistantPoints < maxAssistantPoints) {
     showAssistantMessage("ඇසිස්ටන්ට් තවම සූදානම් වී නැත. පොයින් රැස් කරන්න!");
     return;
   }
 
   const level = document.getElementById("levelSelect").value;
-  const helpType = Math.floor(Math.random() * 4) + 1; // 1-4
+  const helpType = Math.floor(Math.random() * 3) + 1; // 1-3
   
   switch(helpType) {
     case 1: // Provide hint
@@ -867,18 +872,8 @@ document.getElementById('assistantBtn').addEventListener('click', function() {
       
     case 3: // Add extra time (only in classic mode)
       if (level === 'classic') {
-        addExtraTime();
-        showAssistantMessage("කාලය 5 තත්පර වැඩි කරන ලදී!");
-      } else {
-        provideHint();
-        showAssistantMessage("ඉඟියක්: මෙම කාඩ්පත් ගැලපිය හැකිය!");
-      }
-      break;
-      
-    case 4: // Reduce time (only in classic mode)
-      if (level === 'classic') {
-        reduceElapsedTime();
-        showAssistantMessage("කාලය 10 තත්පර අඩු කරන ලදී!");
+        addExtraTime(10); // කාලය තත්පර 10කින් වැඩි කරයි
+        showAssistantMessage("කාලය 10 තත්පර වැඩි කරන ලදී!");
       } else {
         provideHint();
         showAssistantMessage("ඉඟියක්: මෙම කාඩ්පත් ගැලපිය හැකිය!");
@@ -965,41 +960,21 @@ function showAllCardsBriefly() {
 }
 
 // Add extra time
-function addExtraTime() {
+function addExtraTime(seconds = 5) {
   const level = document.getElementById("levelSelect").value;
   
   if (level === 'classic') {
-    time += 5;
+    time += seconds; // කාලය වැඩි කරයි
     timerDisplay.textContent = time;
   }
   
-  // Visual feedback
+  // දෘශ්‍ය ප්‍රතිපෝෂණය
   timerDisplay.classList.add('time-added');
   setTimeout(() => {
     timerDisplay.classList.remove('time-added');
   }, 1000);
   
-  // Play sound
-  if (soundEnabled) {
-    const timeSound = document.getElementById('timeSound');
-    timeSound.currentTime = 0;
-    timeSound.play();
-  }
-}
-
-// Reduce elapsed time (only for classic mode)
-function reduceElapsedTime() {
-  // Reduce by 10 seconds, but don't go below 0
-  time = Math.max(0, time - 10);
-  timerDisplay.textContent = time;
-  
-  // Visual feedback
-  timerDisplay.classList.add('time-reduced');
-  setTimeout(() => {
-    timerDisplay.classList.remove('time-reduced');
-  }, 1000);
-  
-  // Play sound
+  // ශබ්දය වාදනය
   if (soundEnabled) {
     const timeSound = document.getElementById('timeSound');
     timeSound.currentTime = 0;
