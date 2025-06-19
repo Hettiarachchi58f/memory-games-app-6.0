@@ -40,10 +40,11 @@
     
     <div class="branding">
       <img src="icon-192.png" alt="Game Logo" class="brand-logo">
-      <p class="version-info">අනුවාදය 8.1.8</p>
+      <p class="version-info">අනුවාදය 8.1.9</p>
     </div>
   </div>
 </div>
+
   <!-- Username Modal -->
   <div id="usernameModal" class="modal">
     <div class="modal-content">
@@ -52,6 +53,7 @@
       <button onclick="saveUsername()">සුරකින්න</button>
     </div>
   </div>
+
 <!-- Level Progress -->
 <div class="level-progress">
   <div class="level-info">
@@ -86,13 +88,11 @@
   </div>
 </div>
 
-<!-- නව ශබ්ද අංග -->
+<!-- ශබ්ද අංග -->
 <audio id="levelUpSound" src="level-up.mp3" preload="auto"></audio>
 <audio id="assistantSound" src="assistantSound.mp3" preload="auto"></audio>
 <audio id="timeSound" src="timeSound.mp3" preload="auto"></audio>
 <audio id="timeUpSound" src="time-up.mp3" preload="auto"></audio>
-
-<!-- පවතින ශබ්ද අංග -->
 <audio id="matchSound" src="match.mp3" preload="auto"></audio>
 <audio id="mismatchSound" src="mismatch.mp3" preload="auto"></audio>
 <audio id="winSound" src="win.mp3" preload="auto"></audio>
@@ -116,7 +116,7 @@
           <option value="easy">පහසු (4x2)</option>
           <option value="medium" selected>මධ්‍යම (4x4)</option>
           <option value="hard">උපරිම (6x4)</option>
-          <option value="classic">සම්භාව්‍ය (4x4)</option>
+          <option value="classic" class="classic-hidden">සම්භාව්‍ය (4x4)</option>
         </select>
       </div>
       <div class="control-group">
@@ -225,7 +225,7 @@
         <p class="creator-title">Game developer</p>
       </div>
       <div class="version-info">
-        <p><span>අනුවාදය:</span> 8.1.8</p>
+        <p><span>අනුවාදය:</span> 8.1.9</p>
         <p><span>නිර්මාණ දිනය:</span> 2025</p>
         <p><span>තාක්ෂණය:</span> HTML5, CSS3, JavaScript</p>
       </div>
