@@ -20,7 +20,7 @@ const themeNames = {
 };
 
 const CLASSIC_UNLOCK_REQUIREMENT = 10;
-const CLASSIC_TIME_LIMIT = 60; // 60 seconds for classic mode
+const CLASSIC_TIME_LIMIT = 60; // සම්භාව්‍ය මට්ටමේ කාල සීමාව (තත්පර 60)
 
 // DOM Elements
 const board = document.getElementById("gameBoard");
@@ -47,6 +47,7 @@ let deferredPrompt;
 let easyRoundsCompleted = 0;
 let classicUnlocked = false;
 let helperInterval;
+let classicTimeout; // සම්භාව්‍ය මට්ටමේ කාලසීමාව සඳහා
 
 // Level and Assistant System
 let currentLevel = 1;
@@ -247,10 +248,8 @@ function checkClassicUnlock() {
     showHelperMessage(helperMessages.unlock, 5000);
     // Add classic level to select dropdown
     const levelSelect = document.getElementById('levelSelect');
-    const classicOption = document.createElement('option');
-    classicOption.value = 'classic';
-    classicOption.textContent = 'සම්භාව්‍ය මට්ටම (4x4)';
-    levelSelect.appendChild(classicOption);
+    const classicOption = levelSelect.querySelector('option[value="classic"]');
+    classicOption.classList.remove('classic-hidden');
   }
 }
 
@@ -342,6 +341,7 @@ function updateTimer() {
 function createBoard(level) {
   board.innerHTML = "";
   clearInterval(timer);
+  clearTimeout(classicTimeout); // Clear any existing timeouts
   if (helperInterval) clearInterval(helperInterval);
   
   // Reset time based on level
@@ -418,7 +418,7 @@ function createBoard(level) {
       card.classList.add('flipped');
     });
     
-    setTimeout(() => {
+    classicTimeout = setTimeout(() => {
       cards.forEach(card => {
         card.textContent = '?';
         card.classList.remove('flipped');
@@ -470,6 +470,7 @@ function checkForMatch() {
     
     if (matches === totalPairs) {
       clearInterval(timer);
+      clearTimeout(classicTimeout);
       if (helperInterval) clearInterval(helperInterval);
       
       // Track easy rounds for classic unlock
