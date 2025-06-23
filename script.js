@@ -6,7 +6,11 @@ const themes = {
   animals: ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯', '🦁', '🐮', '🐷', '🐸', '🐵', '🐔'],
   vehicles: ['🚗', '🚕', '🚙', '🚌', '🚑', '🚒', '🚲', '🏍', '✈️', '🚀', '🛳', '🚁', '🚚', '🚜', '🏎', '🛵'],
   sports: ['⚽', '🏀', '🏈', '⚾', '🎾', '🏐', '🏉', '🎱', '🏓', '🏸', '🏒', '🏑', '🥍', '🏏', '🪃', '🥊'],
-  foods: ['🍔', '🍕', '🌭', '🥪', '🍣', '🍛', '🍜', '🍝', '🍠', '🍦', '🍩', '🍪', '🎂', '🍫', '🍬', '🍭']
+  foods: ['🍔', '🍕', '🌭', '🥪', '🍣', '🍛', '🍜', '🍝', '🍠', '🍦', '🍩', '🍪', '🎂', '🍫', '🍬', '🍭'],
+  professions: ['👮‍♂️', '👷‍♀️', '👨‍⚕️', '👩‍🍳', '👨‍🔧', '👩‍🎓', '👨‍💻', '👩‍🎨', '👨‍🚀', '👩‍✈️', '👨‍🔬', '👩‍💼', '👨‍🏫', '👩‍🔧', '👨‍🎤', '👩‍🚒'],
+  flags: ['🇱🇰', '🇮🇳', '🇺🇸', '🇬🇧', '🇨🇦', '🇦🇺', '🇯🇵', '🇰🇷', '🇧🇷', '🇫🇷', '🇩🇪', '🇮🇹', '🇪🇸', '🇷🇺', '🇨🇳', '🇿🇦'],
+  music: ['🎹', '🥁', '🎸', '🎷', '🎺', '🎻', '🪕', '🎼', '🎤', '🎧', '📯', '🪘', '🎚️', '🎛️', '🎵', '🎶'],
+  nature: ['🌲', '🌳', '🌴', '🌱', '🌷', '🌸', '🌹', '🍀', '🌻', '🌼', '🌞', '🌛', '🌍', '🌊', '🔥', '❄️']
 };
 
 const themeNames = {
@@ -16,11 +20,22 @@ const themeNames = {
   animals: 'සතුන්',
   vehicles: 'වාහන',
   sports: 'ක්‍රීඩා',
-  foods: 'ආහාර'
+  foods: 'ආහාර',
+  professions: 'වෘත්තීන්',
+  flags: 'ජාතික ධජ',
+  music: 'සංගීත භාණ්ඩ',
+  nature: 'ප්‍රකෘතිය'
 };
 
 const CLASSIC_UNLOCK_REQUIREMENT = 10;
-const CLASSIC_TIME_LIMIT = 60; // සම්භාව්‍ය මට්ටමේ කාල සීමාව (තත්පර 60)
+const CLASSIC_TIME_LIMIT = 60;
+const DAILY_CHALLENGE_REWARD = 10;
+const THEME_PRICES = {
+  professions: 50,
+  flags: 100,
+  music: 150,
+  nature: 200
+};
 
 // DOM Elements
 const board = document.getElementById("gameBoard");
@@ -33,6 +48,9 @@ const attemptsDisplay = document.getElementById("attempts");
 const matchesDisplay = document.getElementById("matches");
 const totalPairsDisplay = document.getElementById("totalPairs");
 const leaderboard = document.getElementById("leaderboard");
+const coinDisplay = document.getElementById("coinCount");
+const shopCoinDisplay = document.getElementById("shopCoinCount");
+const themeSelect = document.getElementById('themeSelect'); // New reference
 
 // Game State
 let timer, time = 0, attempts = 0, matches = 0, totalPairs = 0;
@@ -47,9 +65,10 @@ let deferredPrompt;
 let easyRoundsCompleted = 0;
 let classicUnlocked = false;
 let helperInterval;
-let classicTimeout; // සම්භාව්‍ය මට්ටමේ කාලසීමාව සඳහා
-
-// Level and Assistant System
+let classicTimeout;
+let playerCoins = 0;
+let dailyChallengeCompleted = false;
+let unlockedThemes = ['sinhala', 'numbers', 'fruits', 'animals', 'vehicles', 'sports', 'foods'];
 let currentLevel = 1;
 let currentPoints = 0;
 let requiredPoints = 10;
@@ -74,6 +93,66 @@ function initLevelSystem() {
   updateAssistantDisplay();
 }
 
+// Initialize daily challenge
+function initDailyChallenge() {
+  const today = new Date().toDateString();
+  const lastPlayed = localStorage.getItem('dailyChallengeDate');
+  
+  if (lastPlayed !== today) {
+    dailyChallengeCompleted = false;
+    localStorage.setItem('dailyChallengeDate', today);
+  } else {
+    dailyChallengeCompleted = localStorage.getItem('dailyChallengeCompleted') === 'true';
+  }
+}
+
+function showDailyChallengeBadge() {
+  if (dailyChallengeCompleted) return;
+  
+  const badge = document.createElement('div');
+  badge.className = 'daily-challenge-badge';
+  badge.textContent = 'දිනපතා අභියෝගය!';
+  document.querySelector('.game-container').appendChild(badge);
+}
+
+function updateCoinDisplay() {
+  coinDisplay.textContent = playerCoins;
+  shopCoinDisplay.textContent = playerCoins;
+}
+
+function updateThemeSelect() {
+  themeSelect.innerHTML = '';
+  
+  unlockedThemes.forEach(theme => {
+    const option = document.createElement('option');
+    option.value = theme;
+    option.textContent = themeNames[theme];
+    themeSelect.appendChild(option);
+  });
+  
+  // Set current theme selection
+  if (unlockedThemes.includes(currentTheme)) {
+    themeSelect.value = currentTheme;
+  } else if (unlockedThemes.length > 0) {
+    currentTheme = unlockedThemes[0];
+    themeSelect.value = currentTheme;
+  }
+  
+  // Update shop buttons
+  document.querySelectorAll('.theme-item').forEach(item => {
+    const theme = item.dataset.theme;
+    const button = item.querySelector('.buy-btn');
+    
+    if (unlockedThemes.includes(theme)) {
+      button.disabled = true;
+      button.textContent = 'හිමිකාරීත්වය';
+    } else {
+      button.disabled = false;
+      button.textContent = 'මිලදී ගන්න';
+    }
+  });
+}
+
 // Calculate required points for level
 function calculateRequiredPoints(level) {
   return 10 + (level - 1) * 5;
@@ -88,6 +167,7 @@ function earnPoints(difficulty, time) {
     case 'medium': pointsEarned = 3; break;
     case 'hard': pointsEarned = 4; break;
     case 'classic': pointsEarned = 5; break;
+    case 'daily': pointsEarned = 3; break;
   }
   
   // Time bonus
@@ -133,6 +213,7 @@ function earnAssistantPoints(difficulty, time) {
     case 'medium': pointsEarned = 4; break;
     case 'hard': pointsEarned = 6; break;
     case 'classic': pointsEarned = 10; break;
+    case 'daily': pointsEarned = 5; break;
   }
   
   // Time bonus
@@ -210,6 +291,7 @@ const helperMessages = {
   intro: "මෙය සම්භාව්‍ය මට්ටමයි. කාඩ්පත් කෙටි වේලාවකට පෙන්වනු ලැබේ, පසුව ඒවා ආවරණය කරනු ලැබේ.",
   victory: "ප්‍රශංසා! ඔබ සම්භාව්‍ය මට්ටම ජයග්‍රහණය කළා!",
   timeUp: "කාලය ගෙවී ඇත! නැවත උත්සාහ කරන්න.",
+  dailyComplete: "සුබ පැතුම්! ඔබ දිනපතා අභියෝගය ජයග්‍රහණය කළා. ඔබට 10 කාසි හිමි විය!"
 };
 
 // Initialize Service Worker
@@ -311,8 +393,8 @@ function shuffle(array) {
 function updateTimer() {
   const level = document.getElementById("levelSelect").value;
   
-  if (level === 'classic') {
-    // Count down for classic mode
+  if (level === 'classic' || level === 'daily') {
+    // Count down for classic and daily modes
     time--;
     timerDisplay.textContent = time;
     
@@ -347,6 +429,8 @@ function createBoard(level) {
   // Reset time based on level
   if (level === "classic") {
     time = CLASSIC_TIME_LIMIT;
+  } else if (level === "daily") {
+    time = 120; // 2 minutes for daily challenge
   } else {
     time = 0;
   }
@@ -366,11 +450,24 @@ function createBoard(level) {
   updateBestTimeDisplay();
   
   // Start timer based on level
-  if (level !== "classic") {
+  if (level !== "classic" && level !== "daily") {
     timer = setInterval(updateTimer, 1000);
   }
 
-  currentTheme = document.getElementById("themeSelect").value;
+  // Get theme and validate
+  let selectedTheme = themeSelect.value;
+  if (unlockedThemes.includes(selectedTheme)) {
+    currentTheme = selectedTheme;
+  } else {
+    // Fallback to first unlocked theme
+    if (unlockedThemes.length > 0) {
+      currentTheme = unlockedThemes[0];
+      themeSelect.value = currentTheme;
+    } else {
+      currentTheme = 'sinhala';
+    }
+  }
+  
   const emojis = themes[currentTheme];
   let pairCount, columns;
 
@@ -386,6 +483,10 @@ function createBoard(level) {
   } else if (level === "classic") {
     pairCount = 8;
     columns = 4;
+  } else if (level === "daily") {
+    pairCount = 12;
+    columns = 4;
+    showDailyChallengeBadge();
   }
 
   totalPairs = pairCount;
@@ -426,6 +527,11 @@ function createBoard(level) {
       // Start the countdown timer after cards flip back
       timer = setInterval(updateTimer, 1000);
     }, 5000);
+  }
+  
+  // For daily challenge, start timer immediately
+  if (level === "daily") {
+    timer = setInterval(updateTimer, 1000);
   }
 }
 
@@ -483,11 +589,13 @@ function checkForMatch() {
       
       // Calculate final time
       let finalTime = time;
-      if (level === "classic") {
-        // For classic mode: time taken = total time - remaining time
-        finalTime = CLASSIC_TIME_LIMIT - time;
-        afterClassicWin(finalTime);
-        showHelperMessage(helperMessages.victory, 5000);
+      if (level === "classic" || level === "daily") {
+        // For timed modes: time taken = total time - remaining time
+        finalTime = level === "classic" ? CLASSIC_TIME_LIMIT - time : 120 - time;
+        if (level === "classic") {
+          afterClassicWin(finalTime);
+          showHelperMessage(helperMessages.victory, 5000);
+        }
       }
       
       if (soundEnabled) {
@@ -535,17 +643,17 @@ function afterGameWin(time, attempts) {
   earnPoints(level, time);
   earnAssistantPoints(level, time);
   
-  // Additional logic for first level
-  if (currentLevel === 1) {
-    showFirstLevelInstructions();
+  // Daily challenge reward
+  if (level === "daily" && !dailyChallengeCompleted) {
+    playerCoins += DAILY_CHALLENGE_REWARD;
+    dailyChallengeCompleted = true;
+    localStorage.setItem('dailyChallengeCompleted', 'true');
+    localStorage.setItem('playerCoins', playerCoins);
+    updateCoinDisplay();
+    
+    showHelperMessage(helperMessages.dailyComplete, 5000);
+    
   }
-}
-
-// First level instructions
-function showFirstLevelInstructions() {
-  setTimeout(() => {
-    showAssistantMessage("ප්‍රථම ලෙවල් සාර්ථකව අවසන් කළා! ලෙවල් ඉහළ නැංවීමට පොයින් රැස් කරන්න. උපදෙස් සඳහා ඇසිස්ටන් බොත්තම භාවිතා කරන්න.");
-  }, 2000);
 }
 
 function resetBoard() {
@@ -563,7 +671,7 @@ function saveScore(time, attempts) {
     attempts, 
     theme: currentTheme,
     date: new Date().toLocaleDateString('si-LK'),
-    level: document.getElementById("levelSelect").value
+    level: document.getElementById('levelSelect').value
   });
   scores.sort((a, b) => a.time - b.time || a.attempts - b.attempts);
   localStorage.setItem("scores", JSON.stringify(scores.slice(0, 10)));
@@ -594,6 +702,7 @@ function getLevelName(level) {
     case 'medium': return 'මධ්‍යම';
     case 'hard': return 'උපරිම';
     case 'classic': return 'සම්භාව්‍ය';
+    case 'daily': return 'දිනපතා';
     default: return level;
   }
 }
@@ -603,11 +712,6 @@ function showWinMessage(finalTime, attempts) {
   document.getElementById('finalTime').textContent = finalTime;
   document.getElementById('finalAttempts').textContent = attempts;
   document.getElementById('winMessage').classList.add('show');
-  
-  // Vibrate on win if supported
-  if (navigator.vibrate) {
-    navigator.vibrate([200, 100, 200]);
-  }
 }
 
 function hideWinMessage() {
@@ -733,59 +837,25 @@ function initToggles() {
     }
   });
 
+  // Shop toggle
+  document.getElementById('shopToggle').addEventListener('click', function() {
+    this.classList.toggle('active');
+    const content = document.getElementById('shopContent');
+    content.classList.toggle('show');
+    
+    if (soundEnabled) {
+      const toggleSound = document.getElementById('toggleSound');
+      toggleSound.currentTime = 0;
+      toggleSound.volume = 0.3;
+      toggleSound.play().catch(e => console.log("Toggle sound failed:", e));
+    }
+  });
+
   // Close both sections by default
   document.getElementById('leaderboardContainer').classList.remove('show');
   document.getElementById('aboutContent').classList.remove('show');
+  document.getElementById('shopContent').classList.remove('show');
 }
-
-// PWA Installation
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  showInstallButton();
-});
-
-function showInstallButton() {
-  const installBtn = document.createElement('button');
-  installBtn.id = 'installBtn';
-  installBtn.innerHTML = `
-    <img src="icon-72.png" width="24" height="24">
-    යෙදුම ස්ථාපනය කරන්න
-  `;
-  installBtn.style.cssText = `
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    padding: 10px 15px;
-    background: #00796b;
-    color: white;
-    border: none;
-    border-radius: 30px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    z-index: 999;
-  `;
-  
-  installBtn.addEventListener('click', () => {
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then(choiceResult => {
-      if (choiceResult.outcome === 'accepted') {
-        console.log('User accepted install');
-      }
-      deferredPrompt = null;
-    });
-  });
-  
-  document.body.appendChild(installBtn);
-}
-
-window.addEventListener('appinstalled', () => {
-  console.log('PWA installed');
-  const installBtn = document.getElementById('installBtn');
-  if (installBtn) installBtn.remove();
-});
 
 // Initialize Settings
 function initSettings() {
@@ -820,6 +890,14 @@ function initSettings() {
   if (savedBestTime) {
     classicBestTime = parseInt(savedBestTime);
   }
+  
+  // Load coins
+  const savedCoins = localStorage.getItem('playerCoins');
+  if (savedCoins) playerCoins = parseInt(savedCoins);
+  
+  // Load unlocked themes
+  const savedThemes = localStorage.getItem('unlockedThemes');
+  if (savedThemes) unlockedThemes = JSON.parse(savedThemes);
 }
 
 // Preload Audio
@@ -828,237 +906,6 @@ function preloadAudio() {
     if (sound.readyState === 4) return;
     sound.load().catch(e => console.log("Audio preload failed:", e));
   });
-}
-
-// Android Back Button Handling
-document.addEventListener('backbutton', handleBackButton, false);
-function handleBackButton() {
-  if (document.getElementById('winMessage').classList.contains('show')) {
-    hideWinMessage();
-  } else if (document.getElementById('instructionsModal').classList.contains('show')) {
-    closeInstructions();
-  } else if (document.getElementById('usernameModal').classList.contains('show')) {
-    return;
-  } else if (window.navigator.app) {
-    navigator.app.exitApp();
-  }
-}
-
-// Assistant button functionality
-document.getElementById('assistantBtn').addEventListener('click', function() {
-  if (lockBoard) {
-    showAssistantMessage("තරඟය අවසන්! නව තරඟයක් අරඹන්න.");
-    return;
-  }
-
-  if (assistantPoints < maxAssistantPoints) {
-    showAssistantMessage("ඇසිස්ටන්ට් තවම සූදානම් වී නැත. පොයින් රැස් කරන්න!");
-    return;
-  }
-
-  const level = document.getElementById("levelSelect").value;
-  const helpType = Math.floor(Math.random() * 3) + 1; // 1-3
-  
-  switch(helpType) {
-    case 1: // Provide hint
-      provideHint();
-      showAssistantMessage("ඉඟියක්: මෙම කාඩ්පත් ගැලපිය හැකිය!");
-      break;
-      
-    case 2: // Show all cards briefly
-      showAllCardsBriefly();
-      showAssistantMessage("සියලුම කාඩ්පත් 5 තත්පරයකට පෙන්වනු ලැබේ!");
-      break;
-      
-    case 3: // Add extra time (only in classic mode)
-      if (level === 'classic') {
-        addExtraTime(10); // කාලය තත්පර 10කින් වැඩි කරයි
-        showAssistantMessage("කාලය 10 තත්පර වැඩි කරන ලදී!");
-      } else {
-        provideHint();
-        showAssistantMessage("ඉඟියක්: මෙම කාඩ්පත් ගැලපිය හැකිය!");
-      }
-      break;
-  }
-  
-  // Reset assistant points
-  assistantPoints = 0;
-  updateAssistantDisplay();
-  saveAssistantProgress();
-});
-
-// Provide hint to player
-function provideHint() {
-  const unflippedCards = Array.from(document.querySelectorAll('.card:not(.flipped)'));
-  
-  if (unflippedCards.length < 2) {
-    showAssistantMessage("කාඩ්පත් ප්‍රමාණවත් නැත!");
-    return;
-  }
-  
-  // Find a matching pair
-  const cardValues = {};
-  let matchFound = false;
-  
-  for (const card of unflippedCards) {
-    const value = card.dataset.value;
-    if (cardValues[value]) {
-      // Found a match, highlight both cards
-      cardValues[value].classList.add('hint');
-      card.classList.add('hint');
-      matchFound = true;
-      
-      setTimeout(() => {
-        cardValues[value].classList.remove('hint');
-        card.classList.remove('hint');
-      }, 2000);
-      
-      break;
-    }
-    cardValues[value] = card;
-  }
-  
-  if (!matchFound) {
-    // If no matches, highlight two random cards
-    const randomIndex1 = Math.floor(Math.random() * unflippedCards.length);
-    let randomIndex2 = Math.floor(Math.random() * unflippedCards.length);
-    while (randomIndex2 === randomIndex1) {
-      randomIndex2 = Math.floor(Math.random() * unflippedCards.length);
-    }
-    
-    unflippedCards[randomIndex1].classList.add('hint');
-    unflippedCards[randomIndex2].classList.add('hint');
-    
-    setTimeout(() => {
-      unflippedCards[randomIndex1].classList.remove('hint');
-      unflippedCards[randomIndex2].classList.remove('hint');
-    }, 2000);
-  }
-}
-
-// Show all cards briefly
-function showAllCardsBriefly() {
-  const cards = document.querySelectorAll('.card:not(.matched)');
-  lockBoard = true;
-  
-  // Flip all cards
-  cards.forEach(card => {
-    card.textContent = card.dataset.value;
-    card.classList.add('flipped');
-  });
-  
-  // Flip back after 5 seconds
-  setTimeout(() => {
-    cards.forEach(card => {
-      if (!card.classList.contains('matched')) {
-        card.textContent = '?';
-        card.classList.remove('flipped');
-      }
-    });
-    lockBoard = false;
-  }, 5000);
-}
-
-// Add extra time
-function addExtraTime(seconds = 5) {
-  const level = document.getElementById("levelSelect").value;
-  
-  if (level === 'classic') {
-    time += seconds; // කාලය වැඩි කරයි
-    timerDisplay.textContent = time;
-  }
-  
-  // දෘශ්‍ය ප්‍රතිපෝෂණය
-  timerDisplay.classList.add('time-added');
-  setTimeout(() => {
-    timerDisplay.classList.remove('time-added');
-  }, 1000);
-  
-  // ශබ්දය වාදනය
-  if (soundEnabled) {
-    const timeSound = document.getElementById('timeSound');
-    timeSound.currentTime = 0;
-    timeSound.play();
-  }
-}
-
-// Show assistant message
-function showAssistantMessage(message) {
-  const modal = document.getElementById('assistantModal');
-  const messageElement = modal.querySelector('.assistant-message');
-  
-  messageElement.textContent = message;
-  modal.classList.add('show');
-}
-
-function closeAssistantModal() {
-  document.getElementById('assistantModal').classList.remove('show');
-}
-
-// Make assistant button draggable
-function makeAssistantDraggable() {
-  const assistantBtn = document.getElementById('assistantBtn');
-  let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-  
-  assistantBtn.onmousedown = dragMouseDown;
-  assistantBtn.ontouchstart = dragTouchStart;
-
-  function dragMouseDown(e) {
-    e.preventDefault();
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    document.onmouseup = closeDragElement;
-    document.onmousemove = elementDrag;
-  }
-
-  function dragTouchStart(e) {
-    const touch = e.touches[0];
-    pos3 = touch.clientX;
-    pos4 = touch.clientY;
-    document.ontouchend = closeDragElement;
-    document.ontouchmove = elementDragTouch;
-  }
-
-  function elementDrag(e) {
-    e.preventDefault();
-    pos1 = pos3 - e.clientX;
-    pos2 = pos4 - e.clientY;
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    assistantBtn.style.top = (assistantBtn.offsetTop - pos2) + "px";
-    assistantBtn.style.left = (assistantBtn.offsetLeft - pos1) + "px";
-  }
-
-  function elementDragTouch(e) {
-    const touch = e.touches[0];
-    pos1 = pos3 - touch.clientX;
-    pos2 = pos4 - touch.clientY;
-    pos3 = touch.clientX;
-    pos4 = touch.clientY;
-    assistantBtn.style.top = (assistantBtn.offsetTop - pos2) + "px";
-    assistantBtn.style.left = (assistantBtn.offsetLeft - pos1) + "px";
-  }
-
-  function closeDragElement() {
-    document.onmouseup = null;
-    document.onmousemove = null;
-    document.ontouchend = null;
-    document.ontouchmove = null;
-    
-    // Save position
-    localStorage.setItem('assistantPos', JSON.stringify({
-      top: assistantBtn.style.top,
-      left: assistantBtn.style.left
-    }));
-  }
-  
-  // Load saved position
-  const savedPos = localStorage.getItem('assistantPos');
-  if (savedPos) {
-    const pos = JSON.parse(savedPos);
-    assistantBtn.style.top = pos.top;
-    assistantBtn.style.left = pos.left;
-  }
 }
 
 // On Page Load
@@ -1113,16 +960,35 @@ function initGame() {
   initSettings();
   initToggles();
   initLevelSystem();
+  initDailyChallenge();
   renderLeaderboard();
+  
+  // Initialize theme selection before creating board
+  updateThemeSelect();
+  
   createBoard("medium");
   checkUsername();
   renderUsernameInHeader();
   preloadAudio();
   checkClassicUnlock();
   makeAssistantDraggable();
+  updateCoinDisplay();
   
   // Add event listener for level select change
   document.getElementById('levelSelect').addEventListener('change', function() {
     updateBestTimeDisplay();
+  });
+  
+  // Add buy button functionality
+  document.querySelectorAll('.buy-btn').forEach(button => {
+    button.addEventListener('click', function() {
+      if (this.disabled) return;
+      
+      const themeItem = this.closest('.theme-item');
+      const theme = themeItem.dataset.theme;
+      const price = parseInt(themeItem.dataset.price);
+      
+      handleShopPurchase(theme, price);
+    });
   });
 }
