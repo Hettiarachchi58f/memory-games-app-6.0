@@ -22,7 +22,10 @@
       <div class="brain-lobe right"></div>
       <div class="brain-connector"></div>
     </div>
-    
+    <!-- Add this after theme select -->
+<div id="themeError" class="hidden" style="color:red; padding:5px; text-align:center;">
+  කරුණාකර තේමාවක් තෝරන්න!
+</div>
     <div class="logo-text">
       <h1 class="game-title">මතක තරඟය</h1>
       <p class="game-tagline">මතකය හදපු තරඟය</p>
@@ -103,6 +106,9 @@
   <div class="container">
     <div class="header">
       <h1>මතක තරඟය</h1>
+      <div class="coin-display">
+        <span id="coinCount">0</span> කාසි
+      </div>
       <div class="settings">
         <button id="soundToggle">ශබ්දය: සක්‍රීය</button>
         <button id="darkModeToggle">අඳුරු ප්‍රකාරය</button>
@@ -117,18 +123,13 @@
           <option value="medium" selected>මධ්‍යම (4x4)</option>
           <option value="hard">උපරිම (6x4)</option>
           <option value="classic" class="classic-hidden">සම්භාව්‍ය (4x4)</option>
+          <option value="daily">දිනපතා අභියෝගය</option>
         </select>
       </div>
       <div class="control-group">
         <p>තේමාව තෝරන්න:</p>
         <select id="themeSelect">
-          <option value="sinhala">සිංහල අක්ෂර</option>
-          <option value="numbers">අංක</option>
-          <option value="fruits">පළතුරු</option>
-          <option value="animals">සතුන්</option>
-          <option value="vehicles">වාහන</option>
-          <option value="sports">ක්‍රීඩා</option>
-          <option value="foods">ආහාර</option>
+          <!-- Options populated by JavaScript -->
         </select>
       </div>
       <div class="control-group">
@@ -213,8 +214,59 @@
     <div id="leaderboardContainer" class="leaderboard-container">
       <ol id="leaderboard"></ol>
     </div>
+    
+    <!-- Shop Toggle Button -->
+    <button id="shopToggle" class="shop-toggle-btn">
+      <span class="toggle-icon">▼</span> <span class="toggle-text">තේමා සාප්පුව</span>
+    </button>
+    <div id="shopContent" class="shop-content">
+      <div class="shop-header">
+        <h3>තේමා සාප්පුව</h3>
+        <div class="player-coins">
+          <span id="shopCoinCount">0</span> කාසි
+        </div>
+      </div>
+      
+      <div class="theme-items">
+        <div class="theme-item" data-theme="professions" data-price="50">
+          <div class="theme-preview">👮‍♂️👷‍♀️👨‍⚕️👩‍🍳</div>
+          <div class="theme-details">
+            <h4>වෘත්තීන්</h4>
+            <div class="price">50 කාසි</div>
+          </div>
+          <button class="buy-btn">මිලදී ගන්න</button>
+        </div>
+        
+        <div class="theme-item" data-theme="flags" data-price="100">
+          <div class="theme-preview">🇱🇰🇮🇳🇺🇸🇬🇧</div>
+          <div class="theme-details">
+            <h4>ජාතික ධජ</h4>
+            <div class="price">100 කාසි</div>
+          </div>
+          <button class="buy-btn">මිලදී ගන්න</button>
+        </div>
+        
+        <div class="theme-item" data-theme="music" data-price="150">
+          <div class="theme-preview">🎹🥁🎸🎷</div>
+          <div class="theme-details">
+            <h4>සංගීත භාණ්ඩ</h4>
+            <div class="price">150 කාසි</div>
+          </div>
+          <button class="buy-btn">මිලදී ගන්න</button>
+        </div>
+        
+        <div class="theme-item" data-theme="nature" data-price="200">
+          <div class="theme-preview">🌲🌳🌴🌷</div>
+          <div class="theme-details">
+            <h4>ප්‍රකෘතිය</h4>
+            <div class="price">200 කාසි</div>
+          </div>
+          <button class="buy-btn">මිලදී ගන්න</button>
+        </div>
+      </div>
+    </div>
 
-    <!-- About Page Toggle Button -->
+    <!-- About Toggle Button -->
     <button id="aboutToggle" class="about-toggle-btn">
       <span class="toggle-icon">▼</span> <span class="toggle-text">තොරතුරු පිටුව</span>
     </button>
