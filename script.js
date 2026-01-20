@@ -1,22 +1,22 @@
 // Game Constants
 const themes = {
-  sinhala: ['අ', 'ආ', 'ඇ', 'ඈ', 'ඉ', 'ඊ', 'උ', 'ඌ', 'එ', 'ඔ', 'ක', 'ග', 'ච', 'ජ', 'ට', 'ඩ'],
+  sinhala: ['අ', 'ආ', 'ඇ', 'ඈ', 'ඉ', 'ඊ', 'උ', 'ඌ', 'ඍ', 'ඎ', 'ඏ', 'ඐ', 'එ', 'ඒ', 'ඓ', 'ඔ'],
   numbers: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16'],
-  fruits: ['🍎', '🍌', '🍒', '🍓', '🍊', '🍋', '🍉', '🍇', '🍐', '🍑', '🥭', '🍍', '🥥', '🥝', '🍏', '🍈'],
-  animals: ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯', '🦁', '🐮', '🐷', '🐸', '🐵', '🐔'],
-  vehicles: ['🚗', '🚕', '🚙', '🚌', '🚑', '🚒', '🚲', '🏍', '✈️', '🚀', '🛳', '🚁', '🚚', '🚜', '🏎', '🛵'],
-  sports: ['⚽', '🏀', '🏈', '⚾', '🎾', '🏐', '🏉', '🎱', '🏓', '🏸', '🏒', '🏑', '🥍', '🏏', '🪃', '🥊'],
-  foods: ['🍔', '🍕', '🌭', '🥪', '🍣', '🍛', '🍜', '🍝', '🍠', '🍦', '🍩', '🍪', '🎂', '🍫', '🍬', '🍭'],
-  professions: ['👮‍♂️', '👷‍♀️', '👨‍⚕️', '👩‍🍳', '👨‍🔧', '👩‍🎓', '👨‍💻', '👩‍🎨', '👨‍🚀', '👩‍✈️', '👨‍🔬', '👩‍💼', '👨‍🏫', '👩‍🔧', '👨‍🎤', '👩‍🚒'],
-  flags: ['🇱🇰', '🇮🇳', '🇺🇸', '🇬🇧', '🇨🇦', '🇦🇺', '🇯🇵', '🇰🇷', '🇧🇷', '🇫🇷', '🇩🇪', '🇮🇹', '🇪🇸', '🇷🇺', '🇨🇳', '🇿🇦'],
-  music: ['🎹', '🥁', '🎸', '🎷', '🎺', '🎻', '🪕', '🎼', '🎤', '🎧', '📯', '🪘', '🎚️', '🎛️', '🎵', '🎶'],
-  nature: ['🌲', '🌳', '🌴', '🌱', '🌷', '🌸', '🌹', '🍀', '🌻', '🌼', '🌞', '🌛', '🌍', '🌊', '🔥', '❄️']
+  fruits: ['🍎', '🍌', '🍒', '🍓', '🍊', '🍋', '🍉', '🍇', '🍑', '🍍', '🥝', '🍅', '🥑', '🥥', '🍆', '🌶️'],
+  animals: ['🐘', '🦁', '🐯', '🐼', '🐨', '🦊', '🐻', '🐵', '🐔', '🐸', '🦄', '🐶', '🐱', '🐰', '🐭', '🐹'],
+  vehicles: ['🚗', '🚕', '🚌', '🚑', '🚒', '🚓', '🚲', '🛵', '✈️', '🚀', '🚁', '🚂', '🚢', '🚤', '🛶', '🚜'],
+  sports: ['⚽', '🏀', '🏈', '⚾', '🎾', '🏐', '🏉', '🎱', '🏓', '🏸', '🏒', '🏑', '🥎', '🏏', '🪃', '🥏'],
+  foods: ['🍕', '🍔', '🌭', '🌮', '🌯', '🥗', '🥘', '🥫', '🍝', '🍜', '🍲', '🍛', '🍣', '🍤', '🍙', '🍚'],
+  professions: ['👮‍♂️', '👷‍♀️', '👨‍⚕️', '👩‍🍳', '👨‍🔬', '👩‍🎨', '👨‍🏫', '👩‍💻', '👨‍✈️', '👩‍🚀', '👨‍🔧', '👩‍🏭', '👨‍🎤', '👩‍🎓', '👨‍🌾', '👩‍🚒'],
+  flags: ['🇱🇰', '🇮🇳', '🇺🇸', '🇬🇧', '🇨🇦', '🇦🇺', '🇯🇵', '🇰🇷', '🇸🇬', '🇲🇾', '🇶🇦', '🇸🇦', '🇹🇭', '🇿🇦', '🇨🇳', '🇷🇺'],
+  music: ['🎹', '🥁', '🎸', '🎷', '🎺', '🎻', '🪕', '🎼', '🎤', '🎧', '📻', '🎶', '🪗', '🪘', '🎵', '🎜'],
+  nature: ['🌲', '🌳', '🌴', '🌱', '🌷', '🌸', '🌹', '🍀', '🌻', '🌼', '🌾', '🌿', '🍁', '🍂', '🌵', '🌊']
 };
 
 const themeNames = {
   sinhala: 'සිංහල අක්ෂර',
   numbers: 'අංක',
-  fruits: 'පළතුරු',
+  fruits: 'පලතුරු',
   animals: 'සතුන්',
   vehicles: 'වාහන',
   sports: 'ක්‍රීඩා',
@@ -27,7 +27,7 @@ const themeNames = {
   nature: 'ප්‍රකෘතිය'
 };
 
-const CLASSIC_UNLOCK_REQUIREMENT = 10;
+const CLASSIC_UNLOCK_REQUIREMENT = 3; // Changed to 3 for testing
 const CLASSIC_TIME_LIMIT = 60;
 const DAILY_CHALLENGE_REWARD = 10;
 const THEME_PRICES = {
@@ -50,7 +50,7 @@ const totalPairsDisplay = document.getElementById("totalPairs");
 const leaderboard = document.getElementById("leaderboard");
 const coinDisplay = document.getElementById("coinCount");
 const shopCoinDisplay = document.getElementById("shopCoinCount");
-const themeSelect = document.getElementById('themeSelect'); // New reference
+const themeSelect = document.getElementById('themeSelect');
 
 // Game State
 let timer, time = 0, attempts = 0, matches = 0, totalPairs = 0;
@@ -66,14 +66,14 @@ let easyRoundsCompleted = 0;
 let classicUnlocked = false;
 let helperInterval;
 let classicTimeout;
-let playerCoins = 0;
+let playerCoins = 100; // Starting with 100 coins for testing
 let dailyChallengeCompleted = false;
 let unlockedThemes = ['sinhala', 'numbers', 'fruits', 'animals', 'vehicles', 'sports', 'foods'];
 let currentLevel = 1;
 let currentPoints = 0;
 let requiredPoints = 10;
 let assistantPoints = 0;
-const maxAssistantPoints = 40;
+const maxAssistantPoints = 10; // Reduced for testing
 let previousBestTime = Infinity;
 let classicBestTime = localStorage.getItem('classicBestTime') || Infinity;
 let timeExtended = false;
@@ -112,7 +112,23 @@ function showDailyChallengeBadge() {
   const badge = document.createElement('div');
   badge.className = 'daily-challenge-badge';
   badge.textContent = 'දිනපතා අභියෝගය!';
-  document.querySelector('.game-container').appendChild(badge);
+  badge.style.cssText = `
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: linear-gradient(45deg, #FF5722, #FF9800);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    z-index: 10;
+    animation: pulse 2s infinite;
+  `;
+  
+  const gameContainer = document.querySelector('.game-container');
+  if (gameContainer) {
+    gameContainer.appendChild(badge);
+  }
 }
 
 function updateCoinDisplay() {
@@ -145,7 +161,7 @@ function updateThemeSelect() {
     
     if (unlockedThemes.includes(theme)) {
       button.disabled = true;
-      button.textContent = 'හිමිකාරීත්වය';
+      button.textContent = 'මිලදී ගත්තා';
     } else {
       button.disabled = false;
       button.textContent = 'මිලදී ගන්න';
@@ -197,11 +213,11 @@ function levelUp() {
   if (soundEnabled) {
     const levelUpSound = document.getElementById('levelUpSound');
     levelUpSound.currentTime = 0;
-    levelUpSound.play();
+    levelUpSound.play().catch(e => console.log("Level up sound error:", e));
   }
   
   // Show level up message
-  showHelperMessage(`සුබ පතමු! ඔබ ලෙවල් ${currentLevel} ට උසස් විය!`, 4000);
+  showHelperMessage(`අභිනන්දනය! ඔබ මට්ටම ${currentLevel} ට උසස් විය!`, 4000);
 }
 
 // Earn assistant points
@@ -233,13 +249,13 @@ function earnAssistantPoints(difficulty, time) {
   
   // Show assistant ready message
   if (assistantPoints >= maxAssistantPoints) {
-    showHelperMessage("ඇසිස්ටන්ට් සූදානම්! උපදෙස් ලබා ගැනීමට ක්ලික් කරන්න", 4000);
+    showHelperMessage("ඇසිස්ටන්ට් සුදානම්! ක්ලික් කර උදව් ලබාගන්න", 4000);
     
     // Play assistant ready sound
     if (soundEnabled) {
       const assistantSound = document.getElementById('assistantSound');
       assistantSound.currentTime = 0;
-      assistantSound.play();
+      assistantSound.play().catch(e => console.log("Assistant sound error:", e));
     }
   }
 }
@@ -251,13 +267,18 @@ function updateLevelDisplay() {
   document.querySelector('.points-total').textContent = requiredPoints;
   
   const progressPercent = (currentPoints / requiredPoints) * 100;
-  document.querySelector('.progress-fill').style.width = `${progressPercent}%`;
+  const progressFill = document.querySelector('.progress-fill');
+  if (progressFill) {
+    progressFill.style.width = `${progressPercent}%`;
+  }
 }
 
 // Update assistant display
 function updateAssistantDisplay() {
   const progressPercent = (assistantPoints / maxAssistantPoints) * 100;
   const progressFill = document.querySelector('.assistant-progress .progress-fill');
+  
+  if (!progressFill) return;
   
   // Update circle progress
   const circumference = 2 * Math.PI * 45;
@@ -285,21 +306,203 @@ function saveAssistantProgress() {
   localStorage.setItem('assistantPoints', assistantPoints);
 }
 
-// Helper Messages
-const helperMessages = {
-  unlock: "සුභ පැතුම්! ඔබ පහසු මට්ටම 10 වතාවක් ජයග්‍රහණය කර ඇත. ඔබට දැන් සම්භාව්‍ය මට්ටමට පිවිසිය හැකිය!",
-  intro: "මෙය සම්භාව්‍ය මට්ටමයි. කාඩ්පත් කෙටි වේලාවකට පෙන්වනු ලැබේ, පසුව ඒවා ආවරණය කරනු ලැබේ.",
-  victory: "ප්‍රශංසා! ඔබ සම්භාව්‍ය මට්ටම ජයග්‍රහණය කළා!",
-  timeUp: "කාලය ගෙවී ඇත! නැවත උත්සාහ කරන්න.",
-  dailyComplete: "සුබ පැතුම්! ඔබ දිනපතා අභියෝගය ජයග්‍රහණය කළා. ඔබට 10 කාසි හිමි විය!"
-};
+// Handle shop purchase function
+function handleShopPurchase(theme, price) {
+  if (playerCoins >= price) {
+    // Deduct coins
+    playerCoins -= price;
+    
+    // Add theme to unlocked themes
+    if (!unlockedThemes.includes(theme)) {
+      unlockedThemes.push(theme);
+    }
+    
+    // Save to localStorage
+    localStorage.setItem('playerCoins', playerCoins);
+    localStorage.setItem('unlockedThemes', JSON.stringify(unlockedThemes));
+    
+    // Update displays
+    updateCoinDisplay();
+    updateThemeSelect();
+    
+    // Show success message
+    showHelperMessage(`සාර්ථකව මිලදී ගත්තා! ${themeNames[theme]} තේමාව`, 3000);
+    
+    // Play purchase sound
+    if (soundEnabled) {
+      const purchaseSound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-cash-register-bell-sale-1107.mp3');
+      purchaseSound.volume = 0.5;
+      purchaseSound.play().catch(e => console.log("Purchase sound error:", e));
+    }
+    
+  } else {
+    showHelperMessage('කාසි ප්‍රමාණවත් නැත!', 3000);
+  }
+}
+
+// Make assistant draggable
+function makeAssistantDraggable() {
+  const assistantBtn = document.getElementById('assistantBtn');
+  if (!assistantBtn) return;
+  
+  let isDragging = false;
+  let offsetX, offsetY;
+  let startX, startY;
+  
+  // Set initial position
+  assistantBtn.style.position = 'fixed';
+  assistantBtn.style.bottom = '20px';
+  assistantBtn.style.right = '20px';
+  assistantBtn.style.zIndex = '500';
+  
+  assistantBtn.addEventListener('mousedown', startDrag);
+  assistantBtn.addEventListener('touchstart', startDragTouch, { passive: false });
+  
+  function startDrag(e) {
+    isDragging = true;
+    startX = e.clientX;
+    startY = e.clientY;
+    offsetX = assistantBtn.offsetLeft;
+    offsetY = assistantBtn.offsetTop;
+    
+    document.addEventListener('mousemove', drag);
+    document.addEventListener('mouseup', stopDrag);
+    e.preventDefault();
+  }
+  
+  function startDragTouch(e) {
+    isDragging = true;
+    const touch = e.touches[0];
+    startX = touch.clientX;
+    startY = touch.clientY;
+    offsetX = assistantBtn.offsetLeft;
+    offsetY = assistantBtn.offsetTop;
+    
+    document.addEventListener('touchmove', dragTouch, { passive: false });
+    document.addEventListener('touchend', stopDrag);
+    e.preventDefault();
+  }
+  
+  function drag(e) {
+    if (!isDragging) return;
+    
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
+    
+    const newX = offsetX + dx;
+    const newY = offsetY + dy;
+    
+    // Boundary checking
+    const maxX = window.innerWidth - assistantBtn.offsetWidth;
+    const maxY = window.innerHeight - assistantBtn.offsetHeight;
+    
+    assistantBtn.style.left = `${Math.max(0, Math.min(newX, maxX))}px`;
+    assistantBtn.style.top = `${Math.max(0, Math.min(newY, maxY))}px`;
+    assistantBtn.style.right = 'auto';
+    assistantBtn.style.bottom = 'auto';
+  }
+  
+  function dragTouch(e) {
+    if (!isDragging) return;
+    e.preventDefault();
+    
+    const touch = e.touches[0];
+    const dx = touch.clientX - startX;
+    const dy = touch.clientY - startY;
+    
+    const newX = offsetX + dx;
+    const newY = offsetY + dy;
+    
+    // Boundary checking
+    const maxX = window.innerWidth - assistantBtn.offsetWidth;
+    const maxY = window.innerHeight - assistantBtn.offsetHeight;
+    
+    assistantBtn.style.left = `${Math.max(0, Math.min(newX, maxX))}px`;
+    assistantBtn.style.top = `${Math.max(0, Math.min(newY, maxY))}px`;
+    assistantBtn.style.right = 'auto';
+    assistantBtn.style.bottom = 'auto';
+  }
+  
+  function stopDrag() {
+    isDragging = false;
+    document.removeEventListener('mousemove', drag);
+    document.removeEventListener('touchmove', dragTouch);
+    document.removeEventListener('mouseup', stopDrag);
+    document.removeEventListener('touchend', stopDrag);
+  }
+}
+
+// Use assistant function
+function useAssistant() {
+  if (lockBoard) return;
+  
+  // Play assistant sound
+  if (soundEnabled) {
+    const assistantSound = document.getElementById('assistantSound');
+    assistantSound.currentTime = 0;
+    assistantSound.play().catch(e => console.log("Assistant sound error:", e));
+  }
+  
+  // Find unflipped cards
+  const cards = Array.from(document.querySelectorAll('.card:not(.flipped)'));
+  
+  if (cards.length < 2) {
+    showHelperMessage('පෙරළිය හැකි කාඩ්පත් නැත!', 2000);
+    return;
+  }
+  
+  // Find a matching pair
+  let foundMatch = false;
+  const valuesMap = {};
+  
+  cards.forEach(card => {
+    const value = card.dataset.value;
+    if (valuesMap[value]) {
+      // Found a matching pair
+      valuesMap[value].push(card);
+      foundMatch = true;
+    } else {
+      valuesMap[value] = [card];
+    }
+  });
+  
+  if (foundMatch) {
+    // Highlight first matching pair
+    for (const cardList of Object.values(valuesMap)) {
+      if (cardList.length >= 2) {
+        cardList[0].classList.add('hint');
+        cardList[1].classList.add('hint');
+        
+        setTimeout(() => {
+          cardList[0].classList.remove('hint');
+          cardList[1].classList.remove('hint');
+        }, 2000);
+        
+        showHelperMessage('ගැලපෙන ජෝඩුවක් සොයාගත්තා!', 3000);
+        return;
+      }
+    }
+  } else {
+    // Randomly show two cards as hint
+    const shuffled = cards.sort(() => Math.random() - 0.5);
+    shuffled[0].classList.add('hint');
+    shuffled[1].classList.add('hint');
+    
+    setTimeout(() => {
+      shuffled[0].classList.remove('hint');
+      shuffled[1].classList.remove('hint');
+    }, 2000);
+    
+    showHelperMessage('උත්සාහ කරන්න!', 3000);
+  }
+}
 
 // Initialize Service Worker
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('sw.js')
       .then(registration => {
-        console.log('ServiceWorker registration successful');
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
       })
       .catch(err => {
         console.log('ServiceWorker registration failed: ', err);
@@ -307,31 +510,126 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+// PWA Installation
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  
+  // Show install button after a delay
+  setTimeout(() => {
+    showInstallButton();
+  }, 5000);
+});
+
+function showInstallButton() {
+  // Check if button already exists
+  if (document.getElementById('installBtn')) return;
+  
+  const installBtn = document.createElement('button');
+  installBtn.id = 'installBtn';
+  installBtn.className = 'install-button';
+  installBtn.innerHTML = '📱 App ස්ථාපනය කරන්න';
+  installBtn.style.cssText = `
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    background: linear-gradient(145deg, #00796b, #004c40);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 499;
+    font-family: 'Noto Sans Sinhala', sans-serif;
+    animation: pulse 2s infinite;
+    display: none;
+  `;
+  
+  // Only show on mobile devices
+  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    installBtn.style.display = 'block';
+  }
+  
+  installBtn.addEventListener('click', installApp);
+  document.body.appendChild(installBtn);
+}
+
+function installApp() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('User accepted the install prompt');
+        showHelperMessage('යෙදුම ස්ථාපනය කරන ලදී!', 3000);
+        // Remove install button
+        const installBtn = document.getElementById('installBtn');
+        if (installBtn) installBtn.remove();
+      } else {
+        console.log('User dismissed the install prompt');
+      }
+      deferredPrompt = null;
+    });
+  }
+}
+
 // Helper Functions
 function showHelperMessage(message, duration = 3000) {
+  // Remove existing helper messages
+  document.querySelectorAll('.helper-message').forEach(msg => msg.remove());
+  
   const helperDiv = document.createElement('div');
   helperDiv.className = 'helper-message';
   helperDiv.textContent = message;
+  helperDiv.style.cssText = `
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #00796b;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s;
+    max-width: 90%;
+    text-align: center;
+    font-family: 'Noto Sans Sinhala', sans-serif;
+  `;
+  
   document.body.appendChild(helperDiv);
   
+  // Show message
   setTimeout(() => {
-    helperDiv.classList.add('show');
-  }, 100);
+    helperDiv.style.opacity = '1';
+  }, 10);
   
+  // Hide message after duration
   setTimeout(() => {
-    helperDiv.classList.remove('show');
-    setTimeout(() => helperDiv.remove(), 500);
+    helperDiv.style.opacity = '0';
+    setTimeout(() => {
+      if (helperDiv.parentNode) {
+        helperDiv.remove();
+      }
+    }, 500);
   }, duration);
 }
 
 function checkClassicUnlock() {
   if (easyRoundsCompleted >= CLASSIC_UNLOCK_REQUIREMENT && !classicUnlocked) {
     classicUnlocked = true;
-    showHelperMessage(helperMessages.unlock, 5000);
+    showHelperMessage("සම්භාව්‍ය මට්ටම අගුළු හැරිනි! දැන් ඔබට සම්භාව්‍ය මට්ටම ක්‍රීඩා කළ හැකිය.", 5000);
+    
     // Add classic level to select dropdown
     const levelSelect = document.getElementById('levelSelect');
     const classicOption = levelSelect.querySelector('option[value="classic"]');
-    classicOption.classList.remove('classic-hidden');
+    if (classicOption) {
+      classicOption.classList.remove('classic-hidden');
+    }
   }
 }
 
@@ -367,7 +665,7 @@ function updateCardSize() {
   localStorage.setItem('cardSize', cardSize);
 }
 
-// හොඳම කාලය යාවත්කාලීන කිරීමේ ශ්රිතය
+// Update best time display
 function updateBestTimeDisplay() {
   const bestTimeDisplay = document.getElementById('bestTimeDisplay');
   const bestTimeValue = document.getElementById('bestTimeValue');
@@ -423,8 +721,16 @@ function updateTimer() {
 function createBoard(level) {
   board.innerHTML = "";
   clearInterval(timer);
-  clearTimeout(classicTimeout); // Clear any existing timeouts
+  clearTimeout(classicTimeout);
   if (helperInterval) clearInterval(helperInterval);
+  
+  // Reset game state
+  attempts = 0;
+  matches = 0;
+  firstCard = null;
+  secondCard = null;
+  lockBoard = false;
+  timeExtended = false;
   
   // Reset time based on level
   if (level === "classic") {
@@ -435,13 +741,6 @@ function createBoard(level) {
     time = 0;
   }
   
-  attempts = 0;
-  matches = 0;
-  firstCard = null;
-  secondCard = null;
-  lockBoard = false;
-  timeExtended = false;
-  
   timerDisplay.textContent = time;
   attemptsDisplay.textContent = "0";
   matchesDisplay.textContent = "0";
@@ -449,11 +748,6 @@ function createBoard(level) {
   // Update best time display
   updateBestTimeDisplay();
   
-  // Start timer based on level
-  if (level !== "classic" && level !== "daily") {
-    timer = setInterval(updateTimer, 1000);
-  }
-
   // Get theme and validate
   let selectedTheme = themeSelect.value;
   if (unlockedThemes.includes(selectedTheme)) {
@@ -491,7 +785,8 @@ function createBoard(level) {
 
   totalPairs = pairCount;
   totalPairsDisplay.textContent = pairCount;
-  board.style.gridTemplateColumns = `repeat(${columns}, ${cardSize}px)`;
+  board.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+  board.style.gap = '10px';
 
   let selected = emojis.slice(0, pairCount);
   let cardValues = shuffle([...selected, ...selected]);
@@ -504,15 +799,18 @@ function createBoard(level) {
     card.style.width = `${cardSize}px`;
     card.style.height = `${cardSize}px`;
     card.style.fontSize = `${cardSize * 0.45}px`;
+    card.style.display = 'flex';
+    card.style.justifyContent = 'center';
+    card.style.alignItems = 'center';
+    card.style.cursor = 'pointer';
 
     card.addEventListener("click", flipCard);
-    card.addEventListener("touchstart", flipCard, { passive: true });
     board.appendChild(card);
   });
 
   // For classic level, show all cards briefly
   if (level === "classic") {
-    showHelperMessage(helperMessages.intro, 4000);
+    showHelperMessage("සම්භාව්‍ය මට්ටම: කාඩ්පත් සියල්ල 5 තත්පර තුළ මතක තබාගන්න!", 4000);
     const cards = document.querySelectorAll('.card');
     cards.forEach(card => {
       card.textContent = card.dataset.value;
@@ -527,10 +825,8 @@ function createBoard(level) {
       // Start the countdown timer after cards flip back
       timer = setInterval(updateTimer, 1000);
     }, 5000);
-  }
-  
-  // For daily challenge, start timer immediately
-  if (level === "daily") {
+  } else {
+    // Start timer immediately for other levels
     timer = setInterval(updateTimer, 1000);
   }
 }
@@ -540,7 +836,7 @@ function flipCard() {
 
   if (soundEnabled) {
     flipSound.currentTime = 0;
-    flipSound.play().catch(e => console.log("Audio play failed:", e));
+    flipSound.play().catch(e => console.log("Flip sound error:", e));
   }
 
   this.textContent = this.dataset.value;
@@ -565,14 +861,15 @@ function checkForMatch() {
   if (isMatch) {
     if (soundEnabled) {
       matchSound.currentTime = 0;
-      matchSound.play();
+      matchSound.play().catch(e => console.log("Match sound error:", e));
     }
+    
     matches++;
     matchesDisplay.textContent = matches;
-    firstCard.removeEventListener("click", flipCard);
-    firstCard.removeEventListener("touchstart", flipCard);
-    secondCard.removeEventListener("click", flipCard);
-    secondCard.removeEventListener("touchstart", flipCard);
+    
+    // Mark as matched
+    firstCard.classList.add('matched');
+    secondCard.classList.add('matched');
     
     if (matches === totalPairs) {
       clearInterval(timer);
@@ -594,13 +891,13 @@ function checkForMatch() {
         finalTime = level === "classic" ? CLASSIC_TIME_LIMIT - time : 120 - time;
         if (level === "classic") {
           afterClassicWin(finalTime);
-          showHelperMessage(helperMessages.victory, 5000);
+          showHelperMessage("සුභ පැතුම්! සම්භාව්‍ය මට්ටම ජයග්‍රහණය කළා!", 5000);
         }
       }
       
       if (soundEnabled) {
         winSound.currentTime = 0;
-        winSound.play();
+        winSound.play().catch(e => console.log("Win sound error:", e));
       }
       
       afterGameWin(finalTime, attempts);
@@ -612,8 +909,9 @@ function checkForMatch() {
   } else {
     if (soundEnabled) {
       mismatchSound.currentTime = 0;
-      mismatchSound.play();
+      mismatchSound.play().catch(e => console.log("Mismatch sound error:", e));
     }
+    
     setTimeout(() => {
       firstCard.textContent = "?";
       secondCard.textContent = "?";
@@ -630,8 +928,8 @@ function afterClassicWin(finalTime) {
   if (finalTime < classicBestTime) {
     classicBestTime = finalTime;
     localStorage.setItem('classicBestTime', classicBestTime);
-    showHelperMessage(`නව කාල වාර්තාව! ${classicBestTime} තත්පර`, 4000);
-    updateBestTimeDisplay(); // හොඳම කාලය යාවත්කාලීන කරන්න
+    showHelperMessage(`නව හොඳම කාලය! ${classicBestTime} තත්පර`, 4000);
+    updateBestTimeDisplay();
   }
 }
 
@@ -651,8 +949,15 @@ function afterGameWin(time, attempts) {
     localStorage.setItem('playerCoins', playerCoins);
     updateCoinDisplay();
     
-    showHelperMessage(helperMessages.dailyComplete, 5000);
+    showHelperMessage("දිනපතා අභියෝගය ජයග්‍රහණය කළා! ඔබට 10 කාසි ලැබුණා!", 5000);
+  } else if (level !== "daily") {
+    // Earn coins for regular games
+    const coinsEarned = Math.max(1, Math.floor(10 - attempts/2));
+    playerCoins += coinsEarned;
+    localStorage.setItem('playerCoins', playerCoins);
+    updateCoinDisplay();
     
+    showHelperMessage(`ඔබට ${coinsEarned} කාසි ලැබුණා!`, 3000);
   }
 }
 
@@ -664,7 +969,7 @@ function resetBoard() {
 // Leaderboard Functions
 function saveScore(time, attempts) {
   const scores = JSON.parse(localStorage.getItem("scores") || "[]");
-  const username = localStorage.getItem('username') || 'නාමරහිත';
+  const username = localStorage.getItem('username') || 'අනාමික';
   scores.push({ 
     username,
     time, 
@@ -673,7 +978,16 @@ function saveScore(time, attempts) {
     date: new Date().toLocaleDateString('si-LK'),
     level: document.getElementById('levelSelect').value
   });
-  scores.sort((a, b) => a.time - b.time || a.attempts - b.attempts);
+  
+  // Sort by time (ascending) then attempts (ascending)
+  scores.sort((a, b) => {
+    if (a.time === b.time) {
+      return a.attempts - b.attempts;
+    }
+    return a.time - b.time;
+  });
+  
+  // Keep only top 10 scores
   localStorage.setItem("scores", JSON.stringify(scores.slice(0, 10)));
   renderLeaderboard();
 }
@@ -681,6 +995,14 @@ function saveScore(time, attempts) {
 function renderLeaderboard() {
   leaderboard.innerHTML = "";
   const scores = JSON.parse(localStorage.getItem("scores") || "[]");
+  
+  if (scores.length === 0) {
+    const emptyItem = document.createElement("li");
+    emptyItem.textContent = "තවම ලකුණු නැත. පළමු තරඟය ජයග්‍රහණය කරන්න!";
+    leaderboard.appendChild(emptyItem);
+    return;
+  }
+  
   scores.forEach((score, index) => {
     const item = document.createElement("li");
     item.innerHTML = `
@@ -688,34 +1010,23 @@ function renderLeaderboard() {
       <span class="username">${score.username}</span>
       <span class="time">${score.time}s</span>
       <span class="attempts">${score.attempts} පි.</span>
-      <span class="level">${getLevelName(score.level)}</span>
       <span class="theme">${themeNames[score.theme] || score.theme}</span>
-      <span class="date">${score.date}</span>
     `;
     leaderboard.appendChild(item);
   });
-}
-
-function getLevelName(level) {
-  switch(level) {
-    case 'easy': return 'පහසු';
-    case 'medium': return 'මධ්‍යම';
-    case 'hard': return 'උපරිම';
-    case 'classic': return 'සම්භාව්‍ය';
-    case 'daily': return 'දිනපතා';
-    default: return level;
-  }
 }
 
 // UI Functions
 function showWinMessage(finalTime, attempts) {
   document.getElementById('finalTime').textContent = finalTime;
   document.getElementById('finalAttempts').textContent = attempts;
+  document.getElementById('winMessage').classList.remove('hidden');
   document.getElementById('winMessage').classList.add('show');
 }
 
 function hideWinMessage() {
   document.getElementById('winMessage').classList.remove('show');
+  document.getElementById('winMessage').classList.add('hidden');
 }
 
 function showTimeUpMessage() {
@@ -723,18 +1034,20 @@ function showTimeUpMessage() {
   document.getElementById('timeUpTotalPairs').textContent = totalPairs;
   document.getElementById('timeUpAttempts').textContent = attempts;
   
+  document.getElementById('timeUpMessage').classList.remove('hidden');
   document.getElementById('timeUpMessage').classList.add('show');
   
   // Play time up sound
   if (soundEnabled) {
     const timeUpSound = document.getElementById('timeUpSound');
     timeUpSound.currentTime = 0;
-    timeUpSound.play();
+    timeUpSound.play().catch(e => console.log("Time up sound error:", e));
   }
 }
 
 function hideTimeUpMessage() {
   document.getElementById('timeUpMessage').classList.remove('show');
+  document.getElementById('timeUpMessage').classList.add('hidden');
 }
 
 function showInstructions() {
@@ -747,16 +1060,21 @@ function closeInstructions() {
 
 function startGame() {
   const level = document.getElementById("levelSelect").value;
-  createBoard(level);
-  hideControls();
-  document.getElementById("gameContainer").classList.add("game-focused");
+  const theme = themeSelect.value;
   
-  setTimeout(() => {
-    document.getElementById("gameContainer").scrollIntoView({ 
-      behavior: 'smooth', 
-      block: 'center'
-    });
-  }, 100);
+  if (!theme) {
+    showHelperMessage("කරුණාකර තේමාවක් තෝරන්න!", 3000);
+    return;
+  }
+  
+  createBoard(level);
+  
+  // Hide controls and focus on game
+  document.querySelector(".controls").style.display = "none";
+  document.getElementById("gameContainer").scrollIntoView({ 
+    behavior: 'smooth', 
+    block: 'center'
+  });
 }
 
 function restartGame() {
@@ -764,17 +1082,9 @@ function restartGame() {
   hideWinMessage();
   hideTimeUpMessage();
   createBoard(level);
-  showControls();
-  document.getElementById("gameContainer").classList.remove("game-focused");
-}
-
-function showControls() {
-  document.querySelector(".controls").classList.remove("controls-collapsed");
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function hideControls() {
-  document.querySelector(".controls").classList.add("controls-collapsed");
+  
+  // Show controls again
+  document.querySelector(".controls").style.display = "block";
 }
 
 // Username Functions
@@ -792,18 +1102,21 @@ function saveUsername() {
     document.getElementById('usernameModal').classList.remove('show');
     renderUsernameInHeader();
   } else {
-    alert("කරුණාකර වලංගු නාමයක් ඇතුළත් කරන්න (උපරිම අක්ෂර 20)");
+    showHelperMessage("කරුණාකර වලංගු පරිශීලක නාමයක් ඇතුළත් කරන්න (උපරිම අකුරු 20)", 3000);
   }
 }
 
 function renderUsernameInHeader() {
   const username = localStorage.getItem('username');
   if (username) {
-    const header = document.querySelector('.header');
-    const usernameDisplay = document.createElement('div');
-    usernameDisplay.className = 'username-display';
+    let usernameDisplay = document.querySelector('.username-display');
+    if (!usernameDisplay) {
+      usernameDisplay = document.createElement('div');
+      usernameDisplay.className = 'username-display';
+      const header = document.querySelector('.header');
+      header.insertBefore(usernameDisplay, header.firstChild);
+    }
     usernameDisplay.textContent = `පරිශීලක: ${username}`;
-    header.insertBefore(usernameDisplay, header.firstChild);
   }
 }
 
@@ -817,9 +1130,11 @@ function initToggles() {
     
     if (soundEnabled) {
       const toggleSound = document.getElementById('toggleSound');
-      toggleSound.currentTime = 0;
-      toggleSound.volume = 0.3;
-      toggleSound.play().catch(e => console.log("Toggle sound failed:", e));
+      if (toggleSound) {
+        toggleSound.currentTime = 0;
+        toggleSound.volume = 0.3;
+        toggleSound.play().catch(e => console.log("Toggle sound error:", e));
+      }
     }
   });
 
@@ -831,9 +1146,11 @@ function initToggles() {
     
     if (soundEnabled) {
       const infoSound = document.getElementById('infoSound');
-      infoSound.currentTime = 0;
-      infoSound.volume = 0.3;
-      infoSound.play().catch(e => console.log("Info sound failed:", e));
+      if (infoSound) {
+        infoSound.currentTime = 0;
+        infoSound.volume = 0.3;
+        infoSound.play().catch(e => console.log("Info sound error:", e));
+      }
     }
   });
 
@@ -845,13 +1162,15 @@ function initToggles() {
     
     if (soundEnabled) {
       const toggleSound = document.getElementById('toggleSound');
-      toggleSound.currentTime = 0;
-      toggleSound.volume = 0.3;
-      toggleSound.play().catch(e => console.log("Toggle sound failed:", e));
+      if (toggleSound) {
+        toggleSound.currentTime = 0;
+        toggleSound.volume = 0.3;
+        toggleSound.play().catch(e => console.log("Toggle sound error:", e));
+      }
     }
   });
 
-  // Close both sections by default
+  // Close sections by default
   document.getElementById('leaderboardContainer').classList.remove('show');
   document.getElementById('aboutContent').classList.remove('show');
   document.getElementById('shopContent').classList.remove('show');
@@ -887,7 +1206,7 @@ function initSettings() {
   
   // Load classic best time
   const savedBestTime = localStorage.getItem('classicBestTime');
-  if (savedBestTime) {
+  if (savedBestTime && savedBestTime !== "Infinity") {
     classicBestTime = parseInt(savedBestTime);
   }
   
@@ -897,15 +1216,13 @@ function initSettings() {
   
   // Load unlocked themes
   const savedThemes = localStorage.getItem('unlockedThemes');
-  if (savedThemes) unlockedThemes = JSON.parse(savedThemes);
-}
-
-// Preload Audio
-function preloadAudio() {
-  [matchSound, mismatchSound, winSound, flipSound, toggleSound, infoSound, timeUpSound].forEach(sound => {
-    if (sound.readyState === 4) return;
-    sound.load().catch(e => console.log("Audio preload failed:", e));
-  });
+  if (savedThemes) {
+    try {
+      unlockedThemes = JSON.parse(savedThemes);
+    } catch (e) {
+      console.log("Error parsing unlocked themes:", e);
+    }
+  }
 }
 
 // On Page Load
@@ -917,41 +1234,48 @@ window.onload = () => {
   // Simulate loading progress
   let progress = 0;
   const loadingInterval = setInterval(() => {
-    progress += Math.random() * 10;
+    progress += Math.random() * 15;
     if (progress > 100) progress = 100;
     
-    loadingBar.style.width = `${progress}%`;
-    loadingPercentage.textContent = `${Math.floor(progress)}%`;
+    if (loadingBar) loadingBar.style.width = `${progress}%`;
+    if (loadingPercentage) loadingPercentage.textContent = `${Math.floor(progress)}%`;
     
     // Change loading messages based on progress
     const messages = [
-      "පද්ධතිය පූරණය වෙමින්...",
-      "කාඩ්පත් සූදානම් කරමින්...",
-      "තේමා පටිගත කරමින්...",
-      "ස්කෝර් ලබා ගැනීම...",
-      "සූදානම් වෙමින්..."
+      "දත්ත සම්පත් පූරණය වෙමින්...",
+      "ක්‍රීඩා මෘදුකාංග සකස් කරමින්...",
+      "ශබ්ද ගොනු සූදානම් කරමින්...",
+      "පරිශීලක අතුරුමුහුණත සකස් කරමින්...",
+      "ක්‍රීඩාව සූදානම් කරමින්..."
     ];
     
-    if (progress < 30) {
-      document.querySelector('.loading-message').textContent = messages[0];
-    } else if (progress < 50) {
-      document.querySelector('.loading-message').textContent = messages[1];
-    } else if (progress < 70) {
-      document.querySelector('.loading-message').textContent = messages[2];
-    } else if (progress < 90) {
-      document.querySelector('.loading-message').textContent = messages[3];
-    } else {
-      document.querySelector('.loading-message').textContent = messages[4];
+    const loadingMessage = document.querySelector('.loading-message');
+    if (loadingMessage) {
+      if (progress < 30) {
+        loadingMessage.textContent = messages[0];
+      } else if (progress < 50) {
+        loadingMessage.textContent = messages[1];
+      } else if (progress < 70) {
+        loadingMessage.textContent = messages[2];
+      } else if (progress < 90) {
+        loadingMessage.textContent = messages[3];
+      } else {
+        loadingMessage.textContent = messages[4];
+      }
     }
     
     if (progress >= 100) {
       clearInterval(loadingInterval);
-      splash.classList.add('fade-out');
-      
-      setTimeout(() => {
-        splash.remove();
+      if (splash) {
+        splash.classList.add('fade-out');
+        
+        setTimeout(() => {
+          splash.style.display = 'none';
+          initGame();
+        }, 500);
+      } else {
         initGame();
-      }, 500);
+      }
     }
   }, 200);
 };
@@ -963,20 +1287,35 @@ function initGame() {
   initDailyChallenge();
   renderLeaderboard();
   
-  // Initialize theme selection before creating board
+  // Initialize theme selection
   updateThemeSelect();
   
+  // Set default theme
+  if (!themeSelect.value && unlockedThemes.length > 0) {
+    themeSelect.value = unlockedThemes[0];
+    currentTheme = unlockedThemes[0];
+  }
+  
+  // Create initial game board
   createBoard("medium");
+  
+  // Check username
   checkUsername();
   renderUsernameInHeader();
-  preloadAudio();
-  checkClassicUnlock();
-  makeAssistantDraggable();
-  updateCoinDisplay();
   
-  // Add event listener for level select change
-  document.getElementById('levelSelect').addEventListener('change', function() {
-    updateBestTimeDisplay();
+  // Setup assistant button
+  makeAssistantDraggable();
+  
+  // Add event listener for assistant button
+  document.getElementById('assistantBtn').addEventListener('click', function() {
+    if (assistantPoints >= maxAssistantPoints) {
+      useAssistant();
+      assistantPoints = 0;
+      updateAssistantDisplay();
+      saveAssistantProgress();
+    } else {
+      showHelperMessage(`ඇසිස්ටන්ට් සුදානම් කරන්න! ${maxAssistantPoints - assistantPoints} ලකුණු තව අවශ්‍යයි`, 3000);
+    }
   });
   
   // Add buy button functionality
@@ -991,4 +1330,25 @@ function initGame() {
       handleShopPurchase(theme, price);
     });
   });
+  
+  // Check classic unlock
+  checkClassicUnlock();
+  
+  // Update coin display
+  updateCoinDisplay();
+  
+  // Update assistant display
+  updateAssistantDisplay();
+  
+  // Add event listener for level select change
+  document.getElementById('levelSelect').addEventListener('change', function() {
+    updateBestTimeDisplay();
+  });
+  
+  // Add event listener for theme select change
+  document.getElementById('themeSelect').addEventListener('change', function() {
+    currentTheme = this.value;
+  });
+  
+  console.log("Game initialized successfully!");
 }
