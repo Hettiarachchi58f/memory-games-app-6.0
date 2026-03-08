@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>මතක තරඟය</title>
+  <meta name="theme-color" content="#00796b">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="මතක තරඟය">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- නවතම Loading Screen -->
+  <div id="splash" class="splash-screen">
+    <div class="splash-content">
+      <div class="brain-animation">
+        <div class="brain-lobe left"></div>
+        <div class="brain-lobe right"></div>
+        <div class="brain-connector"></div>
+      </div>
+      
+      <div id="themeError" class="hidden" style="color:red; padding:5px; text-align:center;">
+        කරුණාකර තේමාවක් තෝරන්න!
+      </div>
+      
+      <div class="logo-text">
+        <h1 class="game-title">මතක තරඟය</h1>
+        <p class="game-tagline">මතකය හදපු තරඟය</p>
+      </div>
+      
+      <div class="loading-details">
+        <div class="loading-bar-container">
+          <div class="loading-bar"></div>
+        </div>
+        <div class="loading-text">
+          <span class="loading-percentage">0%</span>
+          <span class="loading-message">පද්ධතිය පූරණය වෙමින්...</span>
+        </div>
+      </div>
+      
+      <div class="branding">
+        <img src="icon-192.png" alt="Game Logo" class="brand-logo">
+        <p class="version-info">අනුවාදය 8.2.1</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Username Modal -->
+  <div id="usernameModal" class="modal">
+    <div class="modal-content">
+      <h3>පරිශීලක නාමය ඇතුළත් කරන්න</h3>
+      <input type="text" id="usernameInput" placeholder="ඔබගේ නම..." maxlength="20">
+      <button onclick="saveUsername()">සුරකින්න</button>
+    </div>
+  </div>
+
+  <!-- Level Progress -->
+  <div class="level-progress">
+    <div class="level-info">
+      <span class="level-label">මට්ටම</span>
+      <span class="level-value">1</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill"></div>
+    </div>
+    <div class="points-info">
+      <span class="points-value">0</span>/<span class="points-total">10</span>
+    </div>
+  </div>
+
+  <!-- Assistant Button -->
+  <div id="assistantBtn" class="assistant-button">
+    <div class="assistant-icon">💡</div>
+    <div class="assistant-progress">
+      <svg viewBox="0 0 100 100">
+        <circle class="progress-ring" cx="50" cy="50" r="45"></circle>
+        <circle class="progress-fill" cx="50" cy="50" r="45"></circle>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Assistant Instructions Modal -->
+  <div id="assistantModal" class="modal">
+    <div class="modal-content">
+      <h3>ඇසිස්ටන්ට් උපදෙස්</h3>
+      <div class="assistant-message"></div>
+      <button onclick="closeAssistantModal()">හරි</button>
+    </div>
+  </div>
+
+  <!-- ශබ්ද අංග -->
+<audio id="levelUpSound" src="level-up.mp3" preload="auto"></audio>
+<audio id="assistantSound" src="assistantSound.mp3" preload="auto"></audio>
+<audio id="timeSound" src="timeSound.mp3" preload="auto"></audio>
+<audio id="timeUpSound" src="time-up.mp3" preload="auto"></audio>
+<audio id="matchSound" src="match.mp3" preload="auto"></audio>
+<audio id="mismatchSound" src="mismatch.mp3" preload="auto"></audio>
+<audio id="winSound" src="win.mp3" preload="auto"></audio>
+<audio id="flipSound" src="flip.mp3" preload="auto"></audio>
+<audio id="toggleSound" src="toggle.mp3" preload="auto"></audio>
+<audio id="infoSound" src="info.mp3" preload="auto"></audio>
+
+
+  <div class="container">
+    <div class="header">
+      <h1>මතක තරඟය</h1>
+      <div class="coin-display">
+        <span id="coinCount">0</span> කාසි
+      </div>
+      <div class="settings">
+        <button id="soundToggle">ශබ්දය: සක්‍රීය</button>
+        <button id="darkModeToggle">අඳුරු ප්‍රකාරය</button>
+      </div>
+    </div>
+    
+    <div class="controls">
+      <div class="control-group">
+        <p>මට්ටම තෝරන්න:</p>
+        <select id="levelSelect">
+          <option value="easy">පහසු (4x2)</option>
+          <option value="medium" selected>මධ්‍යම (4x4)</option>
+          <option value="hard">උපරිම (6x4)</option>
+          <option value="classic" class="classic-hidden">සම්භාව්‍ය (4x4)</option>
+          <option value="daily">දිනපතා අභියෝගය</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <p>තේමාව තෝරන්න:</p>
+        <select id="themeSelect">
+          <!-- Options populated by JavaScript -->
+        </select>
+      </div>
+      <div class="control-group">
+        <p>කාඩ්පත් ප්‍රමාණය:</p>
+        <input type="range" id="cardSize" min="50" max="100" value="80">
+      </div>
+    </div>
+    
+    <div class="buttons">
+      <button onclick="startGame()">ක්‍රීඩාව අරඹන්න</button>
+      <button onclick="showInstructions()">උපදෙස්</button>
+    </div>
+    
+    <div id="gameStatus">
+      <div id="info">
+        <p>කාලය: <span id="timer">0</span> තත්පර</p>
+        <p>පිවිසුම්: <span id="attempts">0</span></p>
+        <p id="bestTimeDisplay" class="hidden">හොඳම කාලය: <span id="bestTimeValue">∞</span> තත්.</p>
+      </div>
+      <div id="matchInfo">
+        <p>ගැලපීම්: <span id="matches">0</span>/<span id="totalPairs">0</span></p>
+      </div>
+    </div>
+    
+    <div class="game-container" id="gameContainer">
+      <div class="game-board" id="gameBoard"></div>
+    </div>
+    
+    <div id="winMessage" class="hidden">
+      <div class="win-content">
+        <div class="trophy-icon">🏆</div>
+        <h2 class="win-title">සුභ පැතුම්!</h2>
+        <p class="win-subtitle">ඔබ තරගය ජයග්‍රහණය කළා!</p>
+        <div class="win-stats-container">
+          <div class="win-stat">
+            <span class="stat-label">කාලය:</span>
+            <span class="stat-value" id="finalTime">0</span>
+            <span class="stat-unit">තත්පර</span>
+          </div>
+          <div class="win-stat">
+            <span class="stat-label">පිවිසුම්:</span>
+            <span class="stat-value" id="finalAttempts">0</span>
+          </div>
+        </div>
+        <div class="win-buttons">
+          <button class="win-button restart-btn" onclick="restartGame()">
+            <span class="button-icon">↻</span>
+            <span>නැවත ආරම්භ කරන්න</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Time Up Message -->
+    <div id="timeUpMessage" class="hidden">
+      <div class="time-up-content">
+        <div class="clock-icon">⏱️</div>
+        <h2 class="time-up-title">කාලය ගෙවී ඇත!</h2>
+        <p class="time-up-subtitle">කණගාටුයි, ඔබ කාලය තුළ තරඟය අවසන් කළ නොහැකි විය</p>
+        <div class="time-up-stats">
+          <div class="time-up-stat">
+            <span class="stat-label">ගැලපීම්:</span>
+            <span class="stat-value" id="timeUpMatches">0</span>/<span id="timeUpTotalPairs">0</span>
+          </div>
+          <div class="time-up-stat">
+            <span class="stat-label">පිවිසුම්:</span>
+            <span class="stat-value" id="timeUpAttempts">0</span>
+          </div>
+        </div>
+        <div class="time-up-buttons">
+          <button class="time-up-button restart-btn" onclick="restartGame()">
+            <span class="button-icon">↻</span>
+            <span>නැවත උත්සාහ කරන්න</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Leaderboard Toggle Button -->
+    <div class="leaderboard-header">
+      <button id="toggleLeaderboard" class="leaderboard-toggle">
+        <span class="toggle-icon">▼</span> <span class="toggle-text">ඉහළ ලකුණු</span>
+      </button>
+    </div>
+    <div id="leaderboardContainer" class="leaderboard-container">
+      <ol id="leaderboard"></ol>
+    </div>
+    
+    <!-- Shop Toggle Button -->
+    <button id="shopToggle" class="shop-toggle-btn">
+      <span class="toggle-icon">▼</span> <span class="toggle-text">තේමා සාප්පුව</span>
+    </button>
+    <div id="shopContent" class="shop-content">
+      <div class="shop-header">
+        <h3>තේමා සාප්පුව</h3>
+        <div class="player-coins">
+          <span id="shopCoinCount">0</span> කාසි
+        </div>
+      </div>
+      
+      <div class="theme-items">
+        <div class="theme-item" data-theme="professions" data-price="50">
+          <div class="theme-preview">👮‍♂️👷‍♀️👨‍⚕️👩‍🍳</div>
+          <div class="theme-details">
+            <h4>වෘත්තීන්</h4>
+            <div class="price">50 කාසි</div>
+          </div>
+          <button class="buy-btn">මිලදී ගන්න</button>
+        </div>
+        
+        <div class="theme-item" data-theme="flags" data-price="100">
+          <div class="theme-preview">🇱🇰🇮🇳🇺🇸🇬🇧</div>
+          <div class="theme-details">
+            <h4>ජාතික ධජ</h4>
+            <div class="price">100 කාසි</div>
+          </div>
+          <button class="buy-btn">මිලදී ගන්න</button>
+        </div>
+        
+        <div class="theme-item" data-theme="music" data-price="150">
+          <div class="theme-preview">🎹🥁🎸🎷</div>
+          <div class="theme-details">
+            <h4>සංගීත භාණ්ඩ</h4>
+            <div class="price">150 කාසි</div>
+          </div>
+          <button class="buy-btn">මිලදී ගන්න</button>
+        </div>
+        
+        <div class="theme-item" data-theme="nature" data-price="200">
+          <div class="theme-preview">🌲🌳🌴🌷</div>
+          <div class="theme-details">
+            <h4>ප්‍රකෘතිය</h4>
+            <div class="price">200 කාසි</div>
+          </div>
+          <button class="buy-btn">මිලදී ගන්න</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- About Toggle Button -->
+    <button id="aboutToggle" class="about-toggle-btn">
+      <span class="toggle-icon">▼</span> <span class="toggle-text">තොරතුරු පිටුව</span>
+    </button>
+    <div id="aboutContent" class="about-content">
+      <div class="creator-info">
+        <img src="creator-mobile.png" alt="created by" class="creator-png">
+        <h3>created by Hashan Hettiarachchi</h3>
+        <p class="creator-title">Game developer</p>
+      </div>
+      <div class="version-info">
+        <p><span>අනුවාදය:</span> 8.2.1</p>
+        <p><span>නිර්මාණ දිනය:</span> 2025</p>
+        <p><span>තාක්ෂණය:</span> HTML5, CSS3, JavaScript</p>
+      </div>
+    </div>
+
+    <div id="instructionsModal" class="modal">
+      <div class="modal-content">
+        <h3>ක්‍රීඩා උපදෙස්</h3>
+        <p>1. කාඩ්පත් දෙකක් එකින් එක පෙරළන්න</p>
+        <p>2. ගැලපෙන කාඩ්පත් ජෝඩු සොයන්න</p>
+        <p>3. අඩුම කාලයෙන් සියලු ජෝඩු සොයන්න</p>
+        <p>4. අඩුම උත්සාහ ගණනකින් ජයග්‍රහණය කරන්න</p>
+        <button onclick="closeInstructions()">හරි</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
